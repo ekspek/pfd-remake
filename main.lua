@@ -91,7 +91,7 @@ function love.draw()
 	love.graphics.setColor(0.7, 0.5, 0)
 	love.graphics.polygon('fill', ground)
 
-	-- Drawing the horizon line
+	-- Horizon line
 	local horizon = {
 		-400, 1 + pitch_pixels,
 		-400, -1 + pitch_pixels,
@@ -100,6 +100,21 @@ function love.draw()
 	}
 	love.graphics.setColor(1,1,1)
 	love.graphics.polygon('fill', horizon)
+
+	-- Pitch lines
+	love.graphics.line(-50, -60 * -9 + pitch_pixels, 50, -60 * -9 + pitch_pixels)
+	for i = -8,9 do
+		-- 10 degree line
+		love.graphics.line(-50, -60 * i + pitch_pixels, 50, -60 * i + pitch_pixels)
+		love.graphics.print(i * 10, 50, -60 * i + pitch_pixels)
+
+		-- 5 degree line
+		love.graphics.line(-25, -60 * i + 30 + pitch_pixels, 25, -60 * i + 30 + pitch_pixels)
+
+		-- 2.5 degree lines
+		love.graphics.line(-10, -60 * i + 15 + pitch_pixels, 10, -60 * i + 15 + pitch_pixels)
+		love.graphics.line(-10, -60 * i + 45 + pitch_pixels, 10, -60 * i + 45 + pitch_pixels)
+	end
 
 	-- Resetting the reference
 	love.graphics.setScissor()
