@@ -24,9 +24,16 @@ function love.keypressed(key)
 end
 
 function love.load()
-	sans = love.graphics.newFont("fonts/B612-Regular.ttf", 15)
-	mono = love.graphics.newFont("fonts/B612Mono-Regular.ttf", 15)
-	sans_label = love.graphics.newFont("fonts/B612-Regular.ttf", 15)
+	sans_file = "fonts/B612-Regular.ttf"
+	sansbold_file = "fonts/B612-Bold.ttf"
+	mono_file = "fonts/B612Mono-Regular.ttf"
+	monobold_file = "fonts/B612Mono-Bold.ttf"
+
+	sans = love.graphics.newFont(sans_file, 15)
+	sans_label = love.graphics.newFont(sans_file, 15)
+	mono = love.graphics.newFont(mono_file, 15)
+	mono_pitch = love.graphics.newFont(mono_file, 15)
+	mono_airspeed = love.graphics.newFont(mono_file, 25)
 
 	local pitch_up = true
 	local roll_left = true
@@ -70,7 +77,7 @@ function love.update(dt)
 		data.ias = 0
 		airspeed_up = true
 	end
-	if airspeed_up then data.ias = data.ias + 1 else data.ias = data.ias - 1 end
+	if airspeed_up then data.ias = data.ias + 0.1 else data.ias = data.ias - 0.1 end
 end
 
 function love.draw()

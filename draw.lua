@@ -46,21 +46,17 @@ function artificial_horizon()
 	love.graphics.polygon('fill', ground)
 
 	-- Horizon line
-	local horizon = {
-		-400, 1 + pitch_pixels,
-		-400, -1 + pitch_pixels,
-		400, -1 + pitch_pixels,
-		400, 1 + pitch_pixels
-	}
 	love.graphics.setColor(1,1,1)
-	love.graphics.polygon('fill', horizon)
+	love.graphics.setLineWidth(2)
+	love.graphics.line(-400, pitch_pixels, 400, pitch_pixels)
 
 	-- Pitch lines
-	love.graphics.setFont(sans_label)
+	love.graphics.setLineWidth(1)
+	love.graphics.setFont(mono_pitch)
 	for i = -9,9 do
 		-- 10 degree line
 		love.graphics.line(-50, -60 * i + pitch_pixels, 50, -60 * i + pitch_pixels)
-		if i ~= 0 then love.graphics.print(math.abs(i) * 10, 55, -60 * i + pitch_pixels - sans_label:getHeight() / 2) end
+		if i ~= 0 then love.graphics.print(math.abs(i) * 10, 55, -60 * i + pitch_pixels - mono_pitch:getHeight() / 2) end
 
 		if i ~= -9 then
 			-- 5 degree line
@@ -164,8 +160,8 @@ end
 
 function airspeed_meter()
 	local airspeed_max = 400
-	local airspeed_scale_factor = 5
-	local airspeed = data.ias
+	local asf = 5 -- Airspeed scale factor - pixel to knot ratio
+	local airspeed = data.ias -- Set a local variable to change
 
 	-- Airspeed check to avoid going over the meter
 	if airspeed > airspeed_max then
@@ -175,27 +171,56 @@ function airspeed_meter()
 	end
 
 	-- Airspeed scrolling factor
-	local airspeed_pixels = airspeed * airspeed_scale_factor
+	local airspeed_pixels = airspeed * asf
 
 	love.graphics.origin()
 
+	-- Indicator box specifications
 	love.graphics.setScissor(50,100,100,600)
 
-	-- Set the origin at the middle of the right edge
+	-- Set the origin at the middle of the left edge
 	love.graphics.translate(50, 400)
-	love.graphics.push()
+	love.graphics.push() -- Push static middle left reference
 
 	love.graphics.setColor(0.47, 0.47, 0.47)
 	love.graphics.polygon('fill', 0, 350, 75, 350, 75, -350, 0, -350)
 
-	-- Set the scrolling reference
-	love.graphics.translate(75, airspeed_pixels + 10 * airspeed_scale_factor)
+	love.graphics.translate(75, airspeed_pixels)
+	love.graphics.push() -- Push scrolling right zero airspeed reference
 	
-	love.graphics.setColor(1,1,1)
-	for i = 0, airspeed_max, 10 do
-		love.graphics.print(airspeed, 0, 0)
+	-- If the lower limit is visible (indicator height by pixel to knot ratio)
+	if airspeed < 700 / asf then
+		love.graphics.setColor(1,0,0)
+		love.graphics.polygon('fill', 0, 0, 0, 700, -5, 700, -5, 0)
 	end
 
-	love.graphics.pop()
+	-- If the upper limit is visible (indicator height by pixel to knot ratio)
+	if airspeed > airspeed_max - 700 / asf then
+		love.graphics.setColor(1,0,0)
+		love.graphics.polygon('fill', 0, -400 * asf, 0, -700 * asf, -5, -700 * asf, -5, -400 * asf)
+	end
+
+	-- Main ticks and numeric labels
+	love.graphics.setColor(1,1,1)
+	love.graphics.setFont(mono_airspeed)
+	for i = 0, airspeed_max, 10 do
+		love.graphics.setLineWidth(2)
+		love.graphics.line(-10, 0, 0, 0)
+
+		if i%20 == 0 or i == 0 then
+			love.graphics.printf(i, -75, -mono_airspeed:getHeight() / 2, 75 - 20, "right")
+		end
+		love.graphics.translate(0, -10 * asf)
+	end
+
+	love.graphics.pop() -- Pop scrolling zero airspeed reference
 	love.graphics.setScissor()
+
+	love.graphics.pop() -- Pop static middle left reference
+
+	love.graphics.setColor(0,0,0)
+	love.graphics.polygon("fill", -40, 40, 60, 40, 60, 10, 70, 0, 60, -10, 60, -40, -40, -40)
+	love.graphics.setColor(1,1,1)
+	love.graphics.setLineWidth(2)
+	love.graphics.polygon("line", -40, 40, 60, 40, 60, 10, 70, 0, 60, -10, 60, -40, -40, -40)
 end
