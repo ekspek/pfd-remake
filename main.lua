@@ -8,7 +8,7 @@ local data = {
 }
 
 local pitchmax = 90
-local rollmax = 90
+local rollmax = math.pi
 
 local keymap = {
 	escape = function() love.event.quit() end,
@@ -56,8 +56,7 @@ function love.update(dt)
 		data.roll = -rollmax
 		roll_left = true
 	end
-	--if roll_left then data.roll = data.roll + math.pi / 180 else data.roll = data.roll - math.pi / 180 end
-	data.roll = 10 * math.pi / 180
+	if roll_left then data.roll = data.roll + math.pi / 180 else data.roll = data.roll - math.pi / 180 end
 end
 
 function love.draw()
@@ -122,10 +121,61 @@ function love.draw()
 			love.graphics.line(-10, -60 * i + 45 + pitch_pixels, 10, -60 * i + 45 + pitch_pixels)
 		end
 	end
-	love.graphics.setFont(sans)
+
+	-- Current roll pointer
+	love.graphics.translate(0, -200)
+	love.graphics.polygon('fill', -10, 20, 10, 20, 0, 10)
 
 	-- Resetting the reference
 	love.graphics.setScissor()
+	love.graphics.pop()
+
+	-- Zero roll pointer
+	love.graphics.push()
+	love.graphics.translate(0, -200)
+	love.graphics.polygon('fill', -10, 0, 10, 0, 0, 10)
+
+	-- Roll pointers
+	-- 10 and 20 degree pointers
+	for i = -2,2 do
+		if i ~= 0 then
+			love.graphics.pop()
+			love.graphics.push()
+
+			local rollind_length = 10
+			love.graphics.rotate(i * 10 * math.pi / 180)
+			love.graphics.translate(0, -190)
+			love.graphics.line(0, 0, 0, -rollind_length)
+		end
+	end
+
+	-- 30 and 60 degree pointers
+	for i = -2,2 do
+		if i ~= 0 then
+			love.graphics.pop()
+			love.graphics.push()
+
+			local rollind_length = 20
+			love.graphics.rotate(i * 30 * math.pi / 180)
+			love.graphics.translate(0, -190)
+			love.graphics.line(0, 0, 0, -rollind_length)
+		end
+	end
+
+	-- 45 degree pointers
+	for i = -1,1 do
+		if i ~= 0 then
+			love.graphics.pop()
+			love.graphics.push()
+
+			local rollind_length = 10
+			love.graphics.rotate(i * 45 * math.pi / 180)
+			love.graphics.translate(0, -190)
+			love.graphics.line(0, 0, 0, -rollind_length)
+		end
+	end
+
+	-- Resetting the reference
 	love.graphics.pop()
 
 	-- Left HUD wing
