@@ -223,21 +223,73 @@ function airspeed_meter()
 	love.graphics.setScissor()
 
 	love.graphics.pop() -- Pop static middle left reference
+	love.graphics.push() -- Push static middle left reference
 
+	-- Draw fill of current airspeed display
 	love.graphics.setColor(0,0,0)
 	love.graphics.polygon("fill", -40, 40, 60, 40, 60, 10, 70, 0, 60, -10, 60, -40, -40, -40)
-	love.graphics.setColor(1,1,1)
-	love.graphics.setLineWidth(2)
-	love.graphics.polygon("line", -40, 40, 60, 40, 60, 10, 70, 0, 60, -10, 60, -40, -40, -40)
 
+	-- Auxiliary variables for hundreds, tenths, units and decimals
 	airspeed.h = math.floor(airspeed.val/100)
 	airspeed.t = math.floor((airspeed.val - airspeed.h * 100) / 10)
 	airspeed.u = math.floor(airspeed.val - airspeed.h * 100 - airspeed.t * 10)
 	airspeed.d = airspeed.val - airspeed.h * 100 - airspeed.t * 10 - airspeed.u
 
+	-- Print the text for hundreds and tenths of the current airspeed display
 	love.graphics.setColor(1,1,1)
 	love.graphics.setFont(mono.airspeedbig)
-	love.graphics.print(airspeed.u, 22, -mono.airspeedbig:getHeight() / 2)
 	love.graphics.print(airspeed.t, 22 - mono.airspeedbig:getWidth(0), -mono.airspeedbig:getHeight() / 2)
 	love.graphics.print(airspeed.h, 22 - mono.airspeedbig:getWidth(0) * 2, -mono.airspeedbig:getHeight() / 2)
+
+	-- Set crop area for scrolling units number
+	love.graphics.setScissor(50 - mono.airspeedbig:getWidth(0) - 22, 400 - 40, mono.airspeedbig:getWidth(0) * 4, 80)
+
+	-- Draw scrolling units number
+	love.graphics.translate(22, airspeed.d * mono.airspeedbig:getHeight())
+	love.graphics.print(airspeed.u)
+
+	love.graphics.translate(0, -2 * mono.airspeedbig:getHeight())
+	if airspeed.val < airspeed.max then
+		if airspeed.u + 2 >= 10 then
+			love.graphics.print(airspeed.u + 2 - 10)
+		else
+			love.graphics.print(airspeed.u + 2)
+		end
+	end
+
+	love.graphics.translate(0, mono.airspeedbig:getHeight())
+	if airspeed.val < airspeed.max then
+		if airspeed.u + 1 >= 10 then
+			love.graphics.print(airspeed.u + 1 - 10)
+		else
+			love.graphics.print(airspeed.u + 1)
+		end
+	end
+
+	love.graphics.translate(0, 2 * mono.airspeedbig:getHeight())
+	if airspeed.val > 1 then
+		if airspeed.u + 10 - 1 >= 10 then
+			love.graphics.print(airspeed.u - 1)
+		else
+			love.graphics.print(airspeed.u - 1 + 10)
+		end
+	end
+
+	love.graphics.translate(0, mono.airspeedbig:getHeight())
+	if airspeed.val > 1 then
+		if airspeed.u + 10 - 2 >= 10 then
+			love.graphics.print(airspeed.u - 2)
+		else
+			love.graphics.print(airspeed.u - 2 + 10)
+		end
+	end
+
+	love.graphics.setScissor()
+
+	love.graphics.pop() -- Pop static middle left reference
+
+	-- Draw border of current airspeed display
+	love.graphics.setColor(1,1,1)
+	love.graphics.setLineWidth(2)
+	love.graphics.polygon("line", -40, 40, 60, 40, 60, 10, 70, 0, 60, -10, 60, -40, -40, -40)
 end
