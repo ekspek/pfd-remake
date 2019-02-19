@@ -9,10 +9,6 @@ data = {
 	heading = 0,
 }
 
-pitchmax = 90
-rollmax = 60 * math.pi / 180
-airspeedmax = 400
-
 local keymap = {
 	escape = function() love.event.quit() end,
 }
@@ -41,50 +37,26 @@ function love.load()
 		airspeed = love.graphics.newFont(mono_file, 25),
 		airspeedbig = love.graphics.newFont(mono_file, 40),
 	}
-
-	local pitch_up = true
-	local roll_left = true
-	local airspeed_up = true
 end
 
 function love.update(dt)
-	--[[
-	data.altitude = data.altitude + (math.random() - 0.5) * 10
-	data.ias = data.ias + (math.random() - 0.5) * 10
-	data.vspeed = data.vspeed + (math.random() - 0.5) * 10
-	data.pitch = data.pitch + (math.random() - 0.5) * 5
-	data.roll = data.roll + (math.random() - 0.5) * 10
-	data.heading = data.heading + (math.random() - 0.5) * 10
-	--]]
-	if data.pitch > pitchmax then
-		data.pitch = pitchmax
-		pitch_up = false
+	if love.keyboard.isDown("up") then
+		data.pitch = data.pitch + 1
+	elseif love.keyboard.isDown("down") then
+		data.pitch = data.pitch - 1
 	end
-	if data.pitch < -pitchmax then
-		data.pitch = -pitchmax
-		pitch_up = true
+	
+	if love.keyboard.isDown("left") then
+		data.roll = data.roll + math.pi / 180
+	elseif love.keyboard.isDown("right") then
+		data.roll = data.roll - math.pi / 180
 	end
-	if pitch_up then data.pitch = data.pitch + 0.3 else data.pitch = data.pitch - 0.3 end
 
-	if data.roll > rollmax then
-		data.roll = rollmax
-		roll_left = false
+	if love.keyboard.isDown("z") then
+		data.ias = data.ias + 1
+	elseif love.keyboard.isDown("x") then
+		data.ias = data.ias - 1
 	end
-	if data.roll < -rollmax then
-		data.roll = -rollmax
-		roll_left = true
-	end
-	if roll_left then data.roll = data.roll + math.pi / 180 else data.roll = data.roll - math.pi / 180 end
-
-	if data.ias > airspeedmax then
-		data.ias = airspeedmax
-		airspeed_up = false
-	end
-	if data.ias < 0 then
-		data.ias = 0
-		airspeed_up = true
-	end
-	if airspeed_up then data.ias = data.ias + 0.1 else data.ias = data.ias - 0.1 end
 end
 
 function love.draw()

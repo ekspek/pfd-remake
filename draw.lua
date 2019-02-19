@@ -245,7 +245,7 @@ function airspeed_meter()
 	love.graphics.setScissor(50 - mono.airspeedbig:getWidth(0) - 22, 400 - 40, mono.airspeedbig:getWidth(0) * 4, 80)
 
 	-- Draw scrolling units number
-	love.graphics.translate(22, airspeed.d * mono.airspeedbig:getHeight())
+	love.graphics.translate(22, airspeed.d * mono.airspeedbig:getHeight() - mono.airspeedbig:getHeight() / 2)
 	love.graphics.print(airspeed.u)
 
 	love.graphics.translate(0, -2 * mono.airspeedbig:getHeight())
