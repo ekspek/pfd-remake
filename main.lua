@@ -82,6 +82,36 @@ function love.draw()
 
 	love.graphics.setScissor()
 
+	-- Left HUD wing
+	love.graphics.setColor(1,1,1)
+	love.graphics.polygon('fill', -150, 0, -50, 0, -50, 2, -150, 2)
+	love.graphics.polygon('fill', -50, 0, -50, 29, -48, 29, -48, 0)
+	love.graphics.polygon('fill', -50, 27, -50, 29, -56, 29, -56, 27)
+	love.graphics.polygon('fill', -54, 29, -56, 29, -56, 6, -54, 6)
+	love.graphics.polygon('fill', -54, 6, -54, 8, -150, 8, -150, 6)
+	love.graphics.polygon('fill', -150, 8, -150, 0, -148, 0, -148, 8)
+	love.graphics.setColor(0,0,0)
+	love.graphics.polygon('fill', -148, 2, -50, 2, -50, 6, -148, 6)
+	love.graphics.polygon('fill', -54, 2, -50, 2, -50, 27, -54, 27)
+
+	-- Right HUD wing
+	love.graphics.setColor(1,1,1)
+	love.graphics.polygon('fill', 150, 0, 50, 0, 50, 2, 150, 2)
+	love.graphics.polygon('fill', 50, 0, 50, 29, 48, 29, 48, 0)
+	love.graphics.polygon('fill', 50, 27, 50, 29, 56, 29, 56, 27)
+	love.graphics.polygon('fill', 54, 29, 56, 29, 56, 6, 54, 6)
+	love.graphics.polygon('fill', 54, 6, 54, 8, 150, 8, 150, 6)
+	love.graphics.polygon('fill', 150, 8, 150, 0, 148, 0, 148, 8)
+	love.graphics.setColor(0,0,0)
+	love.graphics.polygon('fill', 148, 2, 50, 2, 50, 6, 148, 6)
+	love.graphics.polygon('fill', 54, 2, 50, 2, 50, 27, 54, 27)
+
+	-- HUD nose
+	love.graphics.setColor(1,1,1)
+	love.graphics.polygon('fill', -5, 0, 5, 0, 5, 10, -5, 10)
+	love.graphics.setColor(0,0,0)
+	love.graphics.polygon('fill', -3, 2, 3, 2, 3, 8, -3, 8)
+
 	love.graphics.pop()
 
 	-- Debug variable prints
