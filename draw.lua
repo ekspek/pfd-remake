@@ -1,3 +1,14 @@
+function debug_variables()
+	love.graphics.setColor(1,1,1)
+	love.graphics.setFont(sans)
+	love.graphics.print("A " .. string.format("%.5f", data.altitude), 20, 20)
+	love.graphics.print("S " .. string.format("%.5f", data.ias), 20, 20 + sans:getHeight() + 5)
+	love.graphics.print("V " .. string.format("%.5f", data.vspeed), 20, 25 + 2 * sans:getHeight() + 5)
+	love.graphics.print("P " .. string.format("%.5f", data.pitch), 200, 20)
+	love.graphics.print("R " .. string.format("%.5f", data.roll * 180 / math.pi), 200, 20 + sans:getHeight() + 5)
+	love.graphics.print("H " .. string.format("%.5f", data.heading), 200, 25 + 2 * sans:getHeight() + 5)
+end
+
 function artificial_horizon()
 	local pitch_scale_factor = 6
 	local pitch_pixels = data.pitch * pitch_scale_factor
@@ -147,16 +158,44 @@ function artificial_horizon()
 	love.graphics.setColor(0,0,0)
 	love.graphics.polygon('fill', -3, 2, 3, 2, 3, 8, -3, 8)
 
-	-- Debug variable prints
+	-- Final origin reset
 	love.graphics.origin()
-	love.graphics.setColor(1,1,1)
-	love.graphics.setFont(sans)
-	love.graphics.print("A " .. string.format("%.5f", data.altitude), 20, 20)
-	love.graphics.print("S " .. string.format("%.5f", data.ias), 20, 20 + sans:getHeight() + 5)
-	love.graphics.print("V " .. string.format("%.5f", data.vspeed), 20, 25 + 2 * sans:getHeight() + 5)
-	love.graphics.print("P " .. string.format("%.5f", data.pitch), 200, 20)
-	love.graphics.print("R " .. string.format("%.5f", data.roll * 180 / math.pi), 200, 20 + sans:getHeight() + 5)
-	love.graphics.print("H " .. string.format("%.5f", data.heading), 200, 25 + 2 * sans:getHeight() + 5)
-	-- End debug variable prints
 end
 
+function airspeed_meter()
+	local airspeed_max = 400
+	local airspeed_scale_factor = 5
+	local airspeed = data.ias
+
+	-- Airspeed check to avoid going over the meter
+	if airspeed > airspeed_max then
+		airspeed = airspeed_max
+	elseif airspeed < 0 then
+		airspeed = 0
+	end
+
+	-- Airspeed scrolling factor
+	local airspeed_pixels = airspeed * airspeed_scale_factor
+
+	love.graphics.origin()
+
+	love.graphics.setScissor(50,100,100,600)
+
+	-- Set the origin at the middle of the right edge
+	love.graphics.translate(50, 400)
+	love.graphics.push()
+
+	love.graphics.setColor(0.47, 0.47, 0.47)
+	love.graphics.polygon('fill', 0, 350, 75, 350, 75, -350, 0, -350)
+
+	-- Set the scrolling reference
+	love.graphics.translate(75, airspeed_pixels + 10 * airspeed_scale_factor)
+	
+	love.graphics.setColor(1,1,1)
+	for i = 0, airspeed_max, 10 do
+		love.graphics.print(airspeed, 0, 0)
+	end
+
+	love.graphics.pop()
+	love.graphics.setScissor()
+end

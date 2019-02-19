@@ -1,5 +1,3 @@
-require 'load'
-require 'update'
 require 'draw'
 
 data = {
@@ -13,6 +11,7 @@ data = {
 
 pitchmax = 90
 rollmax = 60 * math.pi / 180
+airspeedmax = 400
 
 local keymap = {
 	escape = function() love.event.quit() end,
@@ -31,6 +30,7 @@ function love.load()
 
 	local pitch_up = true
 	local roll_left = true
+	local airspeed_up = true
 end
 
 function love.update(dt)
@@ -51,6 +51,7 @@ function love.update(dt)
 		pitch_up = true
 	end
 	if pitch_up then data.pitch = data.pitch + 0.3 else data.pitch = data.pitch - 0.3 end
+
 	if data.roll > rollmax then
 		data.roll = rollmax
 		roll_left = false
@@ -60,9 +61,21 @@ function love.update(dt)
 		roll_left = true
 	end
 	if roll_left then data.roll = data.roll + math.pi / 180 else data.roll = data.roll - math.pi / 180 end
+
+	if data.ias > airspeedmax then
+		data.ias = airspeedmax
+		airspeed_up = false
+	end
+	if data.ias < 0 then
+		data.ias = 0
+		airspeed_up = true
+	end
+	if airspeed_up then data.ias = data.ias + 1 else data.ias = data.ias - 1 end
 end
 
 function love.draw()
+	debug_variables()
 	artificial_horizon()
+	airspeed_meter()
 end
 
