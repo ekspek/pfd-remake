@@ -1,12 +1,12 @@
 function debug_variables()
 	love.graphics.setColor(1,1,1)
-	love.graphics.setFont(sans)
+	love.graphics.setFont(sans.normal)
 	love.graphics.print("A " .. string.format("%.5f", data.altitude), 20, 20)
-	love.graphics.print("S " .. string.format("%.5f", data.ias), 20, 20 + sans:getHeight() + 5)
-	love.graphics.print("V " .. string.format("%.5f", data.vspeed), 20, 25 + 2 * sans:getHeight() + 5)
+	love.graphics.print("S " .. string.format("%.5f", data.ias), 20, 20 + sans.normal:getHeight() + 5)
+	love.graphics.print("V " .. string.format("%.5f", data.vspeed), 20, 25 + 2 * sans.normal:getHeight() + 5)
 	love.graphics.print("P " .. string.format("%.5f", data.pitch), 200, 20)
-	love.graphics.print("R " .. string.format("%.5f", data.roll * 180 / math.pi), 200, 20 + sans:getHeight() + 5)
-	love.graphics.print("H " .. string.format("%.5f", data.heading), 200, 25 + 2 * sans:getHeight() + 5)
+	love.graphics.print("R " .. string.format("%.5f", data.roll * 180 / math.pi), 200, 20 + sans.normal:getHeight() + 5)
+	love.graphics.print("H " .. string.format("%.5f", data.heading), 200, 25 + 2 * sans.normal:getHeight() + 5)
 end
 
 function artificial_horizon()
@@ -52,11 +52,11 @@ function artificial_horizon()
 
 	-- Pitch lines
 	love.graphics.setLineWidth(1)
-	love.graphics.setFont(mono_pitch)
+	love.graphics.setFont(mono.pitch)
 	for i = -9,9 do
 		-- 10 degree line
 		love.graphics.line(-50, -60 * i + pitch_pixels, 50, -60 * i + pitch_pixels)
-		if i ~= 0 then love.graphics.print(math.abs(i) * 10, 55, -60 * i + pitch_pixels - mono_pitch:getHeight() / 2) end
+		if i ~= 0 then love.graphics.print(math.abs(i) * 10, 55, -60 * i + pitch_pixels - mono.pitch:getHeight() / 2) end
 
 		if i ~= -9 then
 			-- 5 degree line
@@ -159,19 +159,25 @@ function artificial_horizon()
 end
 
 function airspeed_meter()
-	local airspeed_max = 400
 	local asf = 5 -- Airspeed scale factor - pixel to knot ratio
-	local airspeed = data.ias -- Set a local variable to change
+	local airspeed = {
+		val = data.ias,
+		max = 400,
+		d = 0,
+		u = 0,
+		t = 0,
+		h = 0,
+	}
 
 	-- Airspeed check to avoid going over the meter
-	if airspeed > airspeed_max then
-		airspeed = airspeed_max
-	elseif airspeed < 0 then
-		airspeed = 0
+	if airspeed.val > airspeed.max then
+		airspeed.val = airspeed.max
+	elseif airspeed.val < 0 then
+		airspeed.val = 0
 	end
 
 	-- Airspeed scrolling factor
-	local airspeed_pixels = airspeed * asf
+	local airspeed_pixels = airspeed.val * asf
 
 	love.graphics.origin()
 
@@ -189,26 +195,26 @@ function airspeed_meter()
 	love.graphics.push() -- Push scrolling right zero airspeed reference
 	
 	-- If the lower limit is visible (indicator height by pixel to knot ratio)
-	if airspeed < 700 / asf then
+	if airspeed.val < 700 / asf then
 		love.graphics.setColor(1,0,0)
 		love.graphics.polygon('fill', 0, 0, 0, 700, -5, 700, -5, 0)
 	end
 
 	-- If the upper limit is visible (indicator height by pixel to knot ratio)
-	if airspeed > airspeed_max - 700 / asf then
+	if airspeed.val > airspeed.max - 700 / asf then
 		love.graphics.setColor(1,0,0)
 		love.graphics.polygon('fill', 0, -400 * asf, 0, -700 * asf, -5, -700 * asf, -5, -400 * asf)
 	end
 
 	-- Main ticks and numeric labels
 	love.graphics.setColor(1,1,1)
-	love.graphics.setFont(mono_airspeed)
-	for i = 0, airspeed_max, 10 do
+	love.graphics.setFont(mono.airspeed)
+	for i = 0, airspeed.max, 10 do
 		love.graphics.setLineWidth(2)
 		love.graphics.line(-10, 0, 0, 0)
 
 		if i%20 == 0 or i == 0 then
-			love.graphics.printf(i, -75, -mono_airspeed:getHeight() / 2, 75 - 20, "right")
+			love.graphics.printf(i, -75, -mono.airspeed:getHeight() / 2, 75 - 20, "right")
 		end
 		love.graphics.translate(0, -10 * asf)
 	end
@@ -223,4 +229,15 @@ function airspeed_meter()
 	love.graphics.setColor(1,1,1)
 	love.graphics.setLineWidth(2)
 	love.graphics.polygon("line", -40, 40, 60, 40, 60, 10, 70, 0, 60, -10, 60, -40, -40, -40)
+
+	airspeed.h = math.floor(airspeed.val/100)
+	airspeed.t = math.floor((airspeed.val - airspeed.h * 100) / 10)
+	airspeed.u = math.floor(airspeed.val - airspeed.h * 100 - airspeed.t * 10)
+	airspeed.d = airspeed.val - airspeed.h * 100 - airspeed.t * 10 - airspeed.u
+
+	love.graphics.setColor(1,1,1)
+	love.graphics.setFont(mono.airspeedbig)
+	love.graphics.print(airspeed.u, 22, -mono.airspeedbig:getHeight() / 2)
+	love.graphics.print(airspeed.t, 22 - mono.airspeedbig:getWidth(0), -mono.airspeedbig:getHeight() / 2)
+	love.graphics.print(airspeed.h, 22 - mono.airspeedbig:getWidth(0) * 2, -mono.airspeedbig:getHeight() / 2)
 end

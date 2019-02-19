@@ -29,11 +29,18 @@ function love.load()
 	mono_file = "fonts/B612Mono-Regular.ttf"
 	monobold_file = "fonts/B612Mono-Bold.ttf"
 
-	sans = love.graphics.newFont(sans_file, 15)
-	sans_label = love.graphics.newFont(sans_file, 15)
-	mono = love.graphics.newFont(mono_file, 15)
-	mono_pitch = love.graphics.newFont(mono_file, 15)
-	mono_airspeed = love.graphics.newFont(mono_file, 25)
+	sans = {
+		normal = love.graphics.newFont(sans_file, 15),
+		bold = love.graphics.newFont(sansbold_file, 15),
+		label = love.graphics.newFont(sans_file, 15), 
+	}
+	
+	mono = {
+		normal = love.graphics.newFont(mono_file, 15),
+		pitch = love.graphics.newFont(mono_file, 15),
+		airspeed = love.graphics.newFont(mono_file, 25),
+		airspeedbig = love.graphics.newFont(mono_file, 40),
+	}
 
 	local pitch_up = true
 	local roll_left = true
