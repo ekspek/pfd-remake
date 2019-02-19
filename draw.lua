@@ -1,4 +1,4 @@
-function love.draw()
+function artificial_horizon()
 	local pitch_scale_factor = 6
 	local pitch_pixels = data.pitch * pitch_scale_factor
 
