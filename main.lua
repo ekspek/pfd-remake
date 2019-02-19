@@ -8,6 +8,7 @@ local data = {
 }
 
 local pitchmax = 90
+local rollmax = 90
 
 local keymap = {
 	escape = function() love.event.quit() end,
@@ -22,6 +23,7 @@ end
 -- Main LOVE functions
 function love.load()
 	local pitch_up = true
+	local roll_left = true
 end
 
 function love.update(dt)
@@ -42,17 +44,34 @@ function love.update(dt)
 		pitch_up = true
 	end
 	if pitch_up then data.pitch = data.pitch + 1 else data.pitch = data.pitch - 1 end
+	if data.roll > rollmax then
+		data.roll = rollmax
+		roll_left = false
+	end
+	if data.roll < -rollmax then
+		data.roll = -rollmax
+		roll_left = true
+	end
+	if roll_left then data.roll = data.roll + math.pi / 180 else data.roll = data.roll - math.pi / 180 end
 end
 
 function love.draw()
 	local pitch_scale_factor = 6
 	local pitch_pixels = data.pitch * pitch_scale_factor
 
-	love.graphics.push()
-
-	love.graphics.setScissor(200,200,400,400)
+	-- Set reference to the center of the screen
 	love.graphics.translate(love.graphics.getWidth() / 2 - 50, love.graphics.getHeight() / 2)
 
+	-- Push the current reference for using later, as we're creating the artifical horizon next
+	love.graphics.push()
+
+	-- Set the scissor for the aritifical horizon display
+	love.graphics.setScissor(200,200,400,400)
+
+	-- Rotate the artificial horizon based on roll angle (in radians)
+	love.graphics.rotate(data.roll)
+
+	-- Defining the points and color for the blue sky rectangle
 	local sky = {
 		-400, - 1 + pitch_pixels,
 		-400, - love.graphics.getHeight() - 50 + pitch_pixels,
@@ -62,6 +81,7 @@ function love.draw()
 	love.graphics.setColor(0.4, 0.4, 1)
 	love.graphics.polygon('fill', sky)
 
+	-- Defining the points and color for the ground rectangle
 	local ground = {
 		-400, 1 + pitch_pixels,
 		-400, love.graphics.getHeight() + 50 + pitch_pixels,
@@ -71,6 +91,7 @@ function love.draw()
 	love.graphics.setColor(0.7, 0.5, 0)
 	love.graphics.polygon('fill', ground)
 
+	-- Drawing the horizon line
 	local horizon = {
 		-400, 1 + pitch_pixels,
 		-400, -1 + pitch_pixels,
@@ -80,7 +101,9 @@ function love.draw()
 	love.graphics.setColor(1,1,1)
 	love.graphics.polygon('fill', horizon)
 
+	-- Resetting the reference
 	love.graphics.setScissor()
+	love.graphics.pop()
 
 	-- Left HUD wing
 	love.graphics.setColor(1,1,1)
@@ -112,9 +135,8 @@ function love.draw()
 	love.graphics.setColor(0,0,0)
 	love.graphics.polygon('fill', -3, 2, 3, 2, 3, 8, -3, 8)
 
-	love.graphics.pop()
-
 	-- Debug variable prints
+	love.graphics.origin()
 	love.graphics.setColor(1,1,1)
 	love.graphics.print("A " .. string.format("%.5f", data.altitude), 20, 20)
 	love.graphics.print("S " .. string.format("%.5f", data.ias), 20, 40)
