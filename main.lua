@@ -12,7 +12,7 @@ data = {
 
 local keymap = {
 	escape = function() love.event.quit() end,
-	r = function() data.pitch = 2000 end,
+	r = function() data.altitude = 49900 end,
 }
 
 function love.keypressed(key)
@@ -38,6 +38,7 @@ function love.load()
 		pitch = love.graphics.newFont(mono_file, 15),
 		airspeed = love.graphics.newFont(mono_file, 25),
 		airspeedbig = love.graphics.newFont(mono_file, 40),
+		altitude = love.graphics.newFont(mono_file, 18),
 	}
 end
 

@@ -326,7 +326,7 @@ function airspeed_meter()
 end
 
 function altitude_indicator()
-	local asf = 5 -- Altitude scale factor - pixel to feet ratio
+	local asf = 0.5 -- Altitude scale factor - pixel to feet ratio
 	local altitude = {
 		val = data.altitude,
 		max = 50000,
@@ -339,7 +339,7 @@ function altitude_indicator()
 		altitude.val = altitude.min
 	end
 
-	local altitude_pixels = altitude.val * 0.1 * asf
+	local altitude_pixels = altitude.val * asf
 
 	love.graphics.origin()
 	love.graphics.setScissor(675,100,110,600)
@@ -349,14 +349,36 @@ function altitude_indicator()
 	love.graphics.setColor(0.47, 0.47, 0.47)
 	love.graphics.polygon('fill', 110, 350, -100, 350, -100, -350, 110, -350)
 
-	love.graphics.translate(0, altitude_pixels + 110 * asf)
-	for i = -1000,50000,100 do
-		love.graphics.translate(0, -10 * asf)
-		love.graphics.setColor(1,1,1)
-		love.graphics.setLineWidth(2)
-		love.graphics.line(10,0,0,0)
+	love.graphics.translate(0, altitude_pixels)
+	love.graphics.push()
+
+	-- If the lower limit is visible (indicator height by pixel to knot ratio)
+	if altitude.val < altitude.min + 600 / asf then
+		love.graphics.setColor(1,0,0)
+		love.graphics.polygon('fill', 0, -altitude.min * asf, 0, -altitude.min * asf + 350, 5, -altitude.min * asf + 350, 5, -altitude.min * asf)
 	end
 
+	-- If the lower limit is visible (indicator height by pixel to knot ratio)
+	if altitude.val > altitude.max - 600 / asf then
+		love.graphics.setColor(1,0,0)
+		love.graphics.polygon('fill', 0, -altitude.max * asf, 0, -altitude.max * asf - 350, 5, -altitude.max * asf - 350, 5, -altitude.max * asf)
+	end
+
+	for i = -1000,50000,100 do
+		if math.abs(altitude.val - i) < 650 then
+			love.graphics.setColor(1,1,1)
+			love.graphics.setLineWidth(1)
+			love.graphics.line(10, -i * asf, 0, -i * asf)
+
+			local string = ""
+			if i >= 0 then string = ' ' .. i else string = i end
+
+			love.graphics.setFont(mono.altitude)
+			love.graphics.printf(string, 15, -0.5 * i - 2 - mono.altitude:getHeight() / 2, 75, 'left')
+		end
+	end
+
+	love.graphics.pop()
 	love.graphics.pop()
 	love.graphics.setScissor()
 end
