@@ -11,7 +11,37 @@ end
 
 function artificial_horizon()
 	local pitch_scale_factor = 6
-	local pitch_pixels = data.pitch * pitch_scale_factor
+	local pitch = data.pitch
+
+	local intervals = {
+		180,
+		400,
+		800,
+		1400,
+		2000,
+		2300,
+		2300 + 1 * 3,
+		2300 + 2 * 3,
+		2300 + 3 * 3,
+		2300 + 4 * 3,
+		2300 + 5 * 3,
+		2300 + 6 * 3,
+		2300 + 7 * 3,
+		2300 + 8 * 3,
+		2700,
+		3000,
+	}
+
+	surprise(pitch, intervals)
+	
+	-- Pitch check to avoid going overboard
+	if pitch > 90 then
+		pitch = 90
+	elseif pitch < -90 then
+		pitch = -90
+	end
+
+	local pitch_pixels = pitch * pitch_scale_factor
 
 	-- Set reference to the center of the screen
 	love.graphics.translate(love.graphics.getWidth() / 2 - 50, love.graphics.getHeight() / 2)
@@ -57,6 +87,7 @@ function artificial_horizon()
 		-- 10 degree line
 		love.graphics.line(-50, -60 * i + pitch_pixels, 50, -60 * i + pitch_pixels)
 		if i ~= 0 then love.graphics.print(math.abs(i) * 10, 55, -60 * i + pitch_pixels - mono.pitch:getHeight() / 2) end
+		if i ~= 0 then love.graphics.printf(math.abs(i) * 10, -55 - mono.pitch:getWidth(math.abs(i * 10)), -60 * i + pitch_pixels - mono.pitch:getHeight() / 2, mono.pitch:getWidth(math.abs(i * 10)), 'right') end
 
 		if i ~= -9 then
 			-- 5 degree line
@@ -193,7 +224,7 @@ function airspeed_meter()
 
 	love.graphics.translate(75, airspeed_pixels)
 	love.graphics.push() -- Push scrolling right zero airspeed reference
-	
+
 	-- If the lower limit is visible (indicator height by pixel to knot ratio)
 	if airspeed.val < 700 / asf then
 		love.graphics.setColor(1,0,0)
@@ -293,3 +324,60 @@ function airspeed_meter()
 	love.graphics.setLineWidth(2)
 	love.graphics.polygon("line", -40, 40, 60, 40, 60, 10, 70, 0, 60, -10, 60, -40, -40, -40)
 end
+
+function altitude_indicator()
+	local asf = 5 -- Altitude scale factor - pixel to feet ratio
+	local altitude = {
+		val = data.altitude,
+		max = 50000,
+		min = -1000,
+	}
+
+	if altitude.val > altitude.max then
+		altitude.val = altitude.max
+	elseif altitude.val < altitude.min then
+		altitude.val = altitude.min
+	end
+
+	local altitude_pixels = altitude.val * 0.1 * asf
+
+	love.graphics.origin()
+	love.graphics.setScissor(675,100,110,600)
+	love.graphics.translate(675,400)
+	love.graphics.push()
+
+	love.graphics.setColor(0.47, 0.47, 0.47)
+	love.graphics.polygon('fill', 110, 350, -100, 350, -100, -350, 110, -350)
+
+	love.graphics.translate(0, altitude_pixels + 110 * asf)
+	for i = -1000,50000,100 do
+		love.graphics.translate(0, -10 * asf)
+		love.graphics.setColor(1,1,1)
+		love.graphics.setLineWidth(2)
+		love.graphics.line(10,0,0,0)
+	end
+
+	love.graphics.pop()
+	love.graphics.setScissor()
+end
+
+function surprise(var, intervals)
+	if var < intervals[1] then
+		strings.toprint = false
+		strings.numtoprint = 0
+	else
+		for i = 1, #intervals do
+			if intervals[i+1] then
+				if var >= intervals[i] and var < intervals[i+1] then
+					strings.numtoprint = i
+				end
+			else
+				if var >= intervals[i] then
+					strings.numtoprint = i
+				end
+			end
+		end
+		strings.toprint = true
+	end
+end
+
