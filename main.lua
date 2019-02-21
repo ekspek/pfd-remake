@@ -39,6 +39,7 @@ function love.load()
 		airspeed = love.graphics.newFont(mono_file, 25),
 		airspeedbig = love.graphics.newFont(mono_file, 40),
 		altitude = love.graphics.newFont(mono_file, 18),
+		altitudebig = love.graphics.newFont(mono_file, 35),
 	}
 end
 
@@ -62,9 +63,9 @@ function love.update(dt)
 	end
 
 	if love.keyboard.isDown('a') then
-		data.altitude = data.altitude + 10
+		data.altitude = data.altitude + 1
 	elseif love.keyboard.isDown('s') then
-		data.altitude = data.altitude - 10
+		data.altitude = data.altitude - 1
 	end
 end
 
