@@ -43,6 +43,7 @@ function love.load()
 		compass = love.graphics.newFont(mono_file, 15),
 		compassbig = love.graphics.newFont(monobold_file, 35),
 		compasshorizon = love.graphics.newFont(monobold_file, 18),
+		vspeed = love.graphics.newFont(monobold_file, 18),
 	}
 end
 
@@ -76,13 +77,20 @@ function love.update(dt)
 	elseif love.keyboard.isDown('w') then
 		data.heading = data.heading + 1
 	end
+
+	if love.keyboard.isDown('1') then
+		data.vspeed = data.vspeed - 1
+	elseif love.keyboard.isDown('2') then
+		data.vspeed = data.vspeed + 1
+	end
 end
 
 function love.draw()
 	debug_variables()
 	artificial_horizon()
 	airspeed_meter()
-	altitude_indicator()
+	vspeed_indicator()
+	--altitude_indicator()
 	heading_indicator()
 
 	if strings.toprint and strings[strings.numtoprint] then
