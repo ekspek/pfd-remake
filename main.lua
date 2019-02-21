@@ -40,6 +40,8 @@ function love.load()
 		airspeedbig = love.graphics.newFont(mono_file, 40),
 		altitude = love.graphics.newFont(mono_file, 18),
 		altitudebig = love.graphics.newFont(mono_file, 35),
+		compass = love.graphics.newFont(mono_file, 15),
+		compassbig = love.graphics.newFont(monobold_file, 35),
 	}
 end
 
@@ -69,9 +71,9 @@ function love.update(dt)
 	end
 
 	if love.keyboard.isDown('q') then
-		data.heading = data.heading + 1
-	elseif love.keyboard.isDown('w') then
 		data.heading = data.heading - 1
+	elseif love.keyboard.isDown('w') then
+		data.heading = data.heading + 1
 	end
 end
 

@@ -473,6 +473,7 @@ end
 
 function heading_indicator()
 	local radius = 200
+	local dirs = {[90] = 'E', [180] = 'S', [270] = 'W', [360] = 'N'}
 	love.graphics.origin()
 
 	love.graphics.translate(love.graphics.getWidth() / 2 - 50, love.graphics.getHeight() + 50)
@@ -480,18 +481,34 @@ function heading_indicator()
 
 	love.graphics.setColor(0,0,0.8)
 	love.graphics.arc('fill', 0, 0, radius, 0, -math.pi, 50)
+	love.graphics.setColor(0,0,0.4)
+	love.graphics.arc('fill', 0, 0, radius - 10, 0, -math.pi, 50)
+	love.graphics.setColor(0,0,0.2)
+	love.graphics.arc('fill', 0, 0, radius - 27, 0, -math.pi, 50)
+	love.graphics.setColor(0,0,0)
+	love.graphics.arc('fill', 0, 0, radius - 45, 0, -math.pi, 50)
 	love.graphics.setColor(1,1,1)
 	love.graphics.arc('line', 0, 0, radius, 0, -math.pi, 50)
-	love.graphics.setColor(0,0,0)
-	love.graphics.arc('fill', 0, 0, radius - 20, 0, -math.pi, 50)
 
-	love.graphics.rotate(data.heading * math.pi / 180)
+	love.graphics.rotate(-data.heading * math.pi / 180)
 	for i = 1,360 do
 		love.graphics.rotate(math.pi / 180)
+
 		if i%10 == 0 then
 			love.graphics.setColor(1,1,1)
 			love.graphics.setLineWidth(1)
 			love.graphics.line(0,-radius,0,-radius + 10)
+
+			if not dirs[i] then
+				love.graphics.setFont(mono.compass)
+				love.graphics.print(i/10, -mono.compass:getWidth(i/10) / 2, -radius + 10)
+			end
+		end
+
+		if dirs[i] then
+			love.graphics.setColor(1,1,1)
+			love.graphics.setFont(mono.compassbig)
+			love.graphics.print(dirs[i], -mono.compassbig:getWidth(dirs[i]) / 2, -radius + 5)
 		end
 	end
 
