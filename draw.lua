@@ -1,5 +1,5 @@
 function debug_variables()
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.setFont(sans.normal)
 	love.graphics.print("A " .. string.format("%.5f", data.altitude), 20, 20)
 	love.graphics.print("S " .. string.format("%.5f", data.ias), 20, 20 + sans.normal:getHeight() + 5)
@@ -65,7 +65,7 @@ function artificial_horizon()
 		400, - love.graphics.getHeight() - 50 + pitch_pixels,
 		400, - 1 + pitch_pixels
 	}
-	love.graphics.setColor(0.4, 0.4, 1)
+	love.graphics.setColor(colors.skyblue)
 	love.graphics.polygon('fill', sky)
 
 	-- Defining the points and color for the ground rectangle
@@ -75,18 +75,18 @@ function artificial_horizon()
 		400, love.graphics.getHeight() + 50 + pitch_pixels,
 		400, 1 + pitch_pixels
 	}
-	love.graphics.setColor(0.7, 0.5, 0)
+	love.graphics.setColor(colors.groundbrown)
 	love.graphics.polygon('fill', ground)
 
 	-- Horizon line
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.setLineWidth(2)
 	love.graphics.line(-400, pitch_pixels, 400, pitch_pixels)
 
 	-- Heading indicator on horizon line
 	love.graphics.push()
 
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.setFont(mono.compasshorizon)
 
 	love.graphics.translate(-heading * 10, pitch_pixels)
@@ -182,33 +182,33 @@ function artificial_horizon()
 	love.graphics.pop()
 
 	-- Left HUD wing
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.polygon('fill', -150, 0, -50, 0, -50, 2, -150, 2)
 	love.graphics.polygon('fill', -50, 0, -50, 29, -48, 29, -48, 0)
 	love.graphics.polygon('fill', -50, 27, -50, 29, -56, 29, -56, 27)
 	love.graphics.polygon('fill', -54, 29, -56, 29, -56, 6, -54, 6)
 	love.graphics.polygon('fill', -54, 6, -54, 8, -150, 8, -150, 6)
 	love.graphics.polygon('fill', -150, 8, -150, 0, -148, 0, -148, 8)
-	love.graphics.setColor(0,0,0)
+	love.graphics.setColor(colors.black)
 	love.graphics.polygon('fill', -148, 2, -50, 2, -50, 6, -148, 6)
 	love.graphics.polygon('fill', -54, 2, -50, 2, -50, 27, -54, 27)
 
 	-- Right HUD wing
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.polygon('fill', 150, 0, 50, 0, 50, 2, 150, 2)
 	love.graphics.polygon('fill', 50, 0, 50, 29, 48, 29, 48, 0)
 	love.graphics.polygon('fill', 50, 27, 50, 29, 56, 29, 56, 27)
 	love.graphics.polygon('fill', 54, 29, 56, 29, 56, 6, 54, 6)
 	love.graphics.polygon('fill', 54, 6, 54, 8, 150, 8, 150, 6)
 	love.graphics.polygon('fill', 150, 8, 150, 0, 148, 0, 148, 8)
-	love.graphics.setColor(0,0,0)
+	love.graphics.setColor(colors.black)
 	love.graphics.polygon('fill', 148, 2, 50, 2, 50, 6, 148, 6)
 	love.graphics.polygon('fill', 54, 2, 50, 2, 50, 27, 54, 27)
 
 	-- HUD nose
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.polygon('fill', -5, 0, 5, 0, 5, 10, -5, 10)
-	love.graphics.setColor(0,0,0)
+	love.graphics.setColor(colors.black)
 	love.graphics.polygon('fill', -3, 2, 3, 2, 3, 8, -3, 8)
 
 	-- Final origin reset
@@ -245,7 +245,7 @@ function airspeed_meter()
 	love.graphics.translate(50, 400)
 	love.graphics.push() -- Push static middle left reference
 
-	love.graphics.setColor(0.47, 0.47, 0.47)
+	love.graphics.setColor(colors.gray)
 	love.graphics.polygon('fill', 0, 350, 75, 350, 75, -350, 0, -350)
 
 	love.graphics.translate(75, airspeed_pixels)
@@ -264,7 +264,7 @@ function airspeed_meter()
 	end
 
 	-- Main ticks and numeric labels
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.setFont(mono.airspeed)
 	for i = 0, airspeed.max, 10 do
 		love.graphics.setLineWidth(2)
@@ -283,7 +283,7 @@ function airspeed_meter()
 	love.graphics.push() -- Push static middle left reference
 
 	-- Draw fill of current airspeed display
-	love.graphics.setColor(0,0,0)
+	love.graphics.setColor(colors.black)
 	love.graphics.polygon("fill", -40, 40, 60, 40, 60, 10, 70, 0, 60, -10, 60, -40, -40, -40)
 
 	-- Auxiliary variables for hundreds, tenths, units and decimals
@@ -293,7 +293,7 @@ function airspeed_meter()
 	airspeed.d = airspeed.val - airspeed.h * 100 - airspeed.t * 10 - airspeed.u
 
 	-- Print the text for hundreds and tenths of the current airspeed display
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.setFont(mono.airspeedbig)
 	love.graphics.print(airspeed.t, 22 - mono.airspeedbig:getWidth(0), -mono.airspeedbig:getHeight() / 2)
 	love.graphics.print(airspeed.h, 22 - mono.airspeedbig:getWidth(0) * 2, -mono.airspeedbig:getHeight() / 2)
@@ -346,9 +346,13 @@ function airspeed_meter()
 	love.graphics.pop() -- Pop static middle left reference
 
 	-- Draw border of current airspeed display
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.setLineWidth(2)
 	love.graphics.polygon("line", -40, 40, 60, 40, 60, 10, 70, 0, 60, -10, 60, -40, -40, -40)
+
+	love.graphics.setFont(sans.text)
+	love.graphics.setColor(colors.lettergreen)
+	love.graphics.print("ft/s", 10, 300)
 end
 
 function altitude_indicator()
@@ -376,7 +380,7 @@ function altitude_indicator()
 	love.graphics.translate(675,400)
 	love.graphics.push()
 
-	love.graphics.setColor(0.47, 0.47, 0.47)
+	love.graphics.setColor(colors.gray)
 	love.graphics.polygon('fill', 110, 350, -100, 350, -100, -350, 110, -350)
 
 	love.graphics.translate(0, altitude_pixels)
@@ -396,7 +400,7 @@ function altitude_indicator()
 
 	for i = -1000,50000,100 do
 		if math.abs(altitude.val - i) < 650 then
-			love.graphics.setColor(1,1,1)
+			love.graphics.setColor(colors.white)
 			love.graphics.setLineWidth(1)
 			love.graphics.line(10, -i * asf, 0, -i * asf)
 
@@ -414,7 +418,7 @@ function altitude_indicator()
 	love.graphics.push()
 
 	-- Draw fill of current airspeed display
-	love.graphics.setColor(0,0,0)
+	love.graphics.setColor(colors.black)
 	love.graphics.polygon("fill", 150, 40, 20, 40, 20, 10, 10, 0, 20, -10, 20, -40, 150, -40)
 
 	-- Auxiliary variables for hundreds, tenths, units and decimals
@@ -428,7 +432,7 @@ function altitude_indicator()
 	end
 
 	-- Print the text for hundreds and tenths of the current altitude display
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.setFont(mono.altitudebig)
 	love.graphics.translate(28, -mono.altitudebig:getHeight() / 2)
 	if altitude.val < 0 then
@@ -492,9 +496,13 @@ function altitude_indicator()
 	love.graphics.pop() -- Pop static middle left reference
 
 	-- Draw border of current airspeed display
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.setLineWidth(2)
 	love.graphics.polygon('line', 150, 40, 20, 40, 20, 10, 10, 0, 20, -10, 20, -40, 150, -40)
+
+	love.graphics.setFont(sans.text)
+	love.graphics.setColor(colors.lettergreen)
+	love.graphics.print("ft", 110 - 10 - sans.text:getWidth("ft"), 300)
 end
 
 function heading_indicator()
@@ -511,9 +519,9 @@ function heading_indicator()
 	love.graphics.arc('fill', 0, 0, radius - 10, 0, -math.pi, 50)
 	love.graphics.setColor(0,0,0.2)
 	love.graphics.arc('fill', 0, 0, radius - 27, 0, -math.pi, 50)
-	love.graphics.setColor(0,0,0)
+	love.graphics.setColor(colors.black)
 	love.graphics.arc('fill', 0, 0, radius - 45, 0, -math.pi, 50)
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.arc('line', 0, 0, radius, 0, -math.pi, 50)
 
 	love.graphics.rotate(-data.heading * math.pi / 180)
@@ -521,7 +529,7 @@ function heading_indicator()
 		love.graphics.rotate(math.pi / 180)
 
 		if i%10 == 0 then
-			love.graphics.setColor(1,1,1)
+			love.graphics.setColor(colors.white)
 			love.graphics.setLineWidth(1)
 			love.graphics.line(0,-radius,0,-radius + 10)
 
@@ -530,13 +538,13 @@ function heading_indicator()
 				love.graphics.print(i/10, -mono.compass:getWidth(i/10) / 2, -radius + 10)
 			end
 		elseif i%5 == 0 then
-			love.graphics.setColor(1,1,1)
+			love.graphics.setColor(colors.white)
 			love.graphics.setLineWidth(1)
 			love.graphics.line(0,-radius,0,-radius + 5)
 		end
 
 		if dirs[i] then
-			love.graphics.setColor(1,1,1)
+			love.graphics.setColor(colors.white)
 			love.graphics.setFont(mono.compassbig)
 			love.graphics.print(dirs[i], -mono.compassbig:getWidth(dirs[i]) / 2, -radius + 5)
 		end
@@ -545,7 +553,7 @@ function heading_indicator()
 	love.graphics.pop()
 
 	love.graphics.translate(0, -radius + 9)
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.polygon('fill', 0, 0, -15, -20, 15, -20)
 	love.graphics.setColor(1,0,0)
 	love.graphics.polygon('fill', 0, -4, -10, -18, 10, -18)
@@ -568,20 +576,20 @@ function vspeed_indicator()
 	love.graphics.origin()
 	love.graphics.translate(love.graphics.getWidth() - 90, love.graphics.getHeight() / 2)
 
-	love.graphics.setColor(0.47, 0.47, 0.47)
+	love.graphics.setColor(colors.gray)
 	love.graphics.polygon('fill', 60, 100, 40, 150, 0, 150, 0, -150, 40, -150, 60, -100)
 	
 	love.graphics.translate(30,0)
 	love.graphics.push()
 
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.setLineWidth(4)
 	love.graphics.line(-10,0,10,0)
 	
 	love.graphics.setFont(mono.vspeed)
 	love.graphics.print('0', -25, -mono.vspeed:getHeight() / 2)
 
-	love.graphics.setColor(1,1,1)
+	love.graphics.setColor(colors.white)
 	love.graphics.setLineWidth(4)
 
 	love.graphics.line(-10,-140,0,-140)
@@ -626,6 +634,11 @@ function vspeed_indicator()
 	love.graphics.line(-40, vspeed.capped * vspeed.sign, 0, 0)
 
 	love.graphics.setScissor()
+
+	love.graphics.setFont(sans.textsmall)
+	love.graphics.setColor(colors.lettergreen)
+	love.graphics.print("ft/min", -62, 165)
+	love.graphics.print("(x1000)", -62, 185)
 end
 
 function surprise(var, intervals)
