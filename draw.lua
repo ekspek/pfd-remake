@@ -424,8 +424,6 @@ function altitude_indicator()
 	love.graphics.translate(0, 2 * math.fmod(altitude.tp, 20))
 	love.graphics.print(string.format("%02d",altitude.t))
 
-	--string.format("%.5f", data.altitude)
-
 	love.graphics.translate(0, -2 * mono.altitudebig:getHeight())
 	if altitude.val < altitude.max then
 		if altitude.t + 40 >= 100 then
@@ -471,6 +469,39 @@ function altitude_indicator()
 	love.graphics.setColor(1,1,1)
 	love.graphics.setLineWidth(2)
 	love.graphics.polygon('line', 150, 40, 20, 40, 20, 10, 10, 0, 20, -10, 20, -40, 150, -40)
+end
+
+function heading_indicator()
+	local radius = 200
+	love.graphics.origin()
+
+	love.graphics.translate(love.graphics.getWidth() / 2 - 50, love.graphics.getHeight() + 50)
+	love.graphics.push()
+
+	love.graphics.setColor(0,0,0.8)
+	love.graphics.arc('fill', 0, 0, radius, 0, -math.pi, 50)
+	love.graphics.setColor(1,1,1)
+	love.graphics.arc('line', 0, 0, radius, 0, -math.pi, 50)
+	love.graphics.setColor(0,0,0)
+	love.graphics.arc('fill', 0, 0, radius - 20, 0, -math.pi, 50)
+
+	love.graphics.rotate(data.heading * math.pi / 180)
+	for i = 1,360 do
+		love.graphics.rotate(math.pi / 180)
+		if i%10 == 0 then
+			love.graphics.setColor(1,1,1)
+			love.graphics.setLineWidth(1)
+			love.graphics.line(0,-radius,0,-radius + 10)
+		end
+	end
+
+	love.graphics.pop()
+
+	love.graphics.translate(0, -radius + 9)
+	love.graphics.setColor(1,1,1)
+	love.graphics.polygon('fill', 0, 0, -15, -20, 15, -20)
+	love.graphics.setColor(1,0,0)
+	love.graphics.polygon('fill', 0, -4, -10, -18, 10, -18)
 end
 
 function surprise(var, intervals)

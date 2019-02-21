@@ -67,6 +67,12 @@ function love.update(dt)
 	elseif love.keyboard.isDown('s') then
 		data.altitude = data.altitude - 1
 	end
+
+	if love.keyboard.isDown('q') then
+		data.heading = data.heading + 1
+	elseif love.keyboard.isDown('w') then
+		data.heading = data.heading - 1
+	end
 end
 
 function love.draw()
@@ -74,6 +80,7 @@ function love.draw()
 	artificial_horizon()
 	airspeed_meter()
 	altitude_indicator()
+	heading_indicator()
 
 	if strings.toprint and strings[strings.numtoprint] then
 		love.graphics.origin()
