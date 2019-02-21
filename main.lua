@@ -42,6 +42,7 @@ function love.load()
 		altitudebig = love.graphics.newFont(mono_file, 35),
 		compass = love.graphics.newFont(mono_file, 15),
 		compassbig = love.graphics.newFont(monobold_file, 35),
+		compasshorizon = love.graphics.newFont(monobold_file, 18),
 	}
 end
 

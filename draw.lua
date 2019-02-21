@@ -41,6 +41,9 @@ function artificial_horizon()
 		pitch = -90
 	end
 
+	-- Heading check to allow for looping
+	local heading = data.heading % 360
+
 	local pitch_pixels = pitch * pitch_scale_factor
 
 	-- Set reference to the center of the screen
@@ -80,14 +83,37 @@ function artificial_horizon()
 	love.graphics.setLineWidth(2)
 	love.graphics.line(-400, pitch_pixels, 400, pitch_pixels)
 
+	-- Heading indicator on horizon line
+	love.graphics.push()
+
+	love.graphics.setColor(1,1,1)
+	love.graphics.setFont(mono.compasshorizon)
+
+	love.graphics.translate(-heading * 10, pitch_pixels)
+	love.graphics.translate(-3600,0)
+
+	-- Three sets of numbers to allow for continuous scrolling
+	for i = 1,3 do
+		for j = 10,360,10 do
+			love.graphics.translate(100, 0)
+			love.graphics.print(j / 10, -mono.compasshorizon:getWidth(j / 10) / 2, 0)
+		end
+	end
+
+	love.graphics.pop()
+
 	-- Pitch lines
 	love.graphics.setLineWidth(1)
 	love.graphics.setFont(mono.pitch)
 	for i = -9,9 do
 		-- 10 degree line
 		love.graphics.line(-50, -60 * i + pitch_pixels, 50, -60 * i + pitch_pixels)
-		if i ~= 0 then love.graphics.print(math.abs(i) * 10, 55, -60 * i + pitch_pixels - mono.pitch:getHeight() / 2) end
-		if i ~= 0 then love.graphics.printf(math.abs(i) * 10, -55 - mono.pitch:getWidth(math.abs(i * 10)), -60 * i + pitch_pixels - mono.pitch:getHeight() / 2, mono.pitch:getWidth(math.abs(i * 10)), 'right') end
+		if i ~= 0 then
+			love.graphics.print(math.abs(i) * 10, 55, -60 * i + pitch_pixels - mono.pitch:getHeight() / 2)
+		end
+		if i ~= 0 then
+			love.graphics.printf(math.abs(i) * 10, -55 - mono.pitch:getWidth(math.abs(i * 10)), -60 * i + pitch_pixels - mono.pitch:getHeight() / 2, mono.pitch:getWidth(math.abs(i * 10)), 'right')
+		end
 
 		if i ~= -9 then
 			-- 5 degree line
@@ -503,6 +529,10 @@ function heading_indicator()
 				love.graphics.setFont(mono.compass)
 				love.graphics.print(i/10, -mono.compass:getWidth(i/10) / 2, -radius + 10)
 			end
+		elseif i%5 == 0 then
+			love.graphics.setColor(1,1,1)
+			love.graphics.setLineWidth(1)
+			love.graphics.line(0,-radius,0,-radius + 5)
 		end
 
 		if dirs[i] then
