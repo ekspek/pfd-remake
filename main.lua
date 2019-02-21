@@ -1,5 +1,9 @@
-require 'draw'
-require 'overshoot'
+require 'indicators.airspeed'
+require 'indicators.altitude'
+require 'indicators.heading'
+require 'indicators.horizon'
+require 'indicators.vspeed'
+require 'other'
 
 data = {
 	altitude = 0,
