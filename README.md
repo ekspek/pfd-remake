@@ -9,14 +9,16 @@ To run the program on Linux, make sure you have LÖVE 11.0 or higher installed. 
 love ./
 ```
 Instead of relying on input from external programs, like the original program, this version currently relies on keyboard inputs for testing. The mappings are found below.
+
 | Variable  | Increase Key | Decrease key |
 | --------- | ------------ | ------------ |
-| Pitch  | Up key | Down key |
-| Roll  | Right key | Left key |
-| Airspeed  | Z | X |
-| Altitude  | A | S |
-| Heading  | W | Q |
-| Vertical speed  | 1 | 2 |
+| Pitch | Up key | Down key |
+| Roll | Right key | Left key |
+| Airspeed | `Z` | `X` |
+| Altitude | `A` | `S` |
+| Heading | `W` | `Q` |
+| Vertical speed | `1` | `2` |
+
 Networking capabilites similar to the original project are planned but not yet implemented.
 
 #### Font
