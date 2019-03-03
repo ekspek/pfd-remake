@@ -22,7 +22,6 @@ strings = {
 }
 
 function debug_variables()
-	love.graphics.origin()
 	love.graphics.setColor(colors.white)
 	love.graphics.setFont(sans.normal)
 	love.graphics.print("A " .. string.format("%.5f", state.data.altitude), 20, 20)

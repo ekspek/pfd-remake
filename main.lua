@@ -103,12 +103,6 @@ function love.draw()
 		if indicator.draw then indicator:draw() end
 	end
 
-	debug_variables()
-	artificial_horizon()
-	vspeed_indicator()
-	altitude_indicator()
-	heading_indicator()
-
 	if strings.toprint and strings[strings.numtoprint] then
 		love.graphics.origin()
 		love.graphics.setColor(colors.white)

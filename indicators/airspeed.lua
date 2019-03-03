@@ -3,7 +3,7 @@ local state = require 'state'
 return function()
 	local asf = 5 -- Airspeed scale factor - pixel to knot ratio
 	local airspeed = {
-		val = state.data.ias,
+		val = 0,
 		max = 400,
 		d = 0,
 		u = 0,
@@ -15,6 +15,7 @@ return function()
 	local airspeed_pixels = 0
 
 	entity.update = function()
+		airspeed.val = state.data.ias
 		-- Airspeed check to avoid going over the meter
 		if airspeed.val > airspeed.max then
 			airspeed.val = airspeed.max
