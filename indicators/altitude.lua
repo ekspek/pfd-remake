@@ -1,3 +1,5 @@
+local state = require 'state'
+
 function altitude_indicator()
 	local asf = 0.5 -- Altitude scale factor - pixel to feet ratio
 	local altitude = {

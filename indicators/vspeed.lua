@@ -1,3 +1,5 @@
+local state = require 'state'
+
 function vspeed_indicator()
 	local vspeed = {
 		val = state.data.vspeed / 1000 * 60, -- Feet per second to thousands of feet per minute

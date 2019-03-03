@@ -1,3 +1,5 @@
+local state = require 'state'
+
 strings = {
 	"This is deliberate. The meter is not supposed to go this far up, but the state.data received can.",
 	"OK, you can stop it now. Turn around.",
@@ -20,6 +22,7 @@ strings = {
 }
 
 function debug_variables()
+	love.graphics.origin()
 	love.graphics.setColor(colors.white)
 	love.graphics.setFont(sans.normal)
 	love.graphics.print("A " .. string.format("%.5f", state.data.altitude), 20, 20)

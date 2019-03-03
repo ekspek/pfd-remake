@@ -1,10 +1,10 @@
-require 'indicators.airspeed'
+local state = require 'state'
+local indicators = require 'indicators'
 require 'indicators.altitude'
 require 'indicators.heading'
 require 'indicators.horizon'
 require 'indicators.vspeed'
 require 'other'
-state = require 'state'
 
 local keymap = {
 	escape = function() love.event.quit() end,
@@ -92,12 +92,19 @@ function love.update(dt)
 	elseif love.keyboard.isDown('2') then
 		state.data.vspeed = state.data.vspeed + 1
 	end
+
+	for _, indicator in ipairs(indicators) do
+		if indicator.update then indicator:update() end
+	end
 end
 
 function love.draw()
+	for _, indicator in ipairs(indicators) do
+		if indicator.draw then indicator:draw() end
+	end
+
 	debug_variables()
 	artificial_horizon()
-	airspeed_meter()
 	vspeed_indicator()
 	altitude_indicator()
 	heading_indicator()

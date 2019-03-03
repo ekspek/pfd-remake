@@ -1,3 +1,5 @@
+local state = require 'state'
+
 function artificial_horizon()
 	local pitch_scale_factor = 6
 	local pitch = state.data.pitch

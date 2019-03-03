@@ -1,3 +1,5 @@
+local state = require 'state'
+
 function heading_indicator()
 	local radius = 200
 	local dirs = {[90] = 'E', [180] = 'S', [270] = 'W', [360] = 'N'}
