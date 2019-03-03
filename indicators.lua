@@ -4,6 +4,7 @@ local altitude = require 'indicators.altitude'
 local heading = require 'indicators.heading'
 local horizon = require 'indicators.horizon'
 local vspeed = require 'indicators.vspeed'
+local debugprint = require 'debugprint'
 
 local indicators = {
 	airspeed(),
@@ -11,6 +12,7 @@ local indicators = {
 	vspeed(),
 	altitude(),
 	horizon(),
+	debugprint(),
 }
 
 return indicators

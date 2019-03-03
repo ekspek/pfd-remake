@@ -1,10 +1,5 @@
 local state = require 'state'
 local indicators = require 'indicators'
-require 'indicators.altitude'
-require 'indicators.heading'
-require 'indicators.horizon'
-require 'indicators.vspeed'
-require 'other'
 
 local keymap = {
 	escape = function() love.event.quit() end,
@@ -103,11 +98,13 @@ function love.draw()
 		if indicator.draw then indicator:draw() end
 	end
 
+	--[[
 	if strings.toprint and strings[strings.numtoprint] then
 		love.graphics.origin()
 		love.graphics.setColor(colors.white)
 		love.graphics.setFont(sans.normal)
 		love.graphics.printf(strings[strings.numtoprint], 400, 20, love.graphics.getWidth() - 420, 'left')
 	end
+	--]]
 end
 

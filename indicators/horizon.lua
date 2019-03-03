@@ -25,8 +25,6 @@ return function()
 		3000,
 	}
 
-	--surprise(pitch, intervals)
-
 	local entity = {}
 	
 	entity.update = function()
