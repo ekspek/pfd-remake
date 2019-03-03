@@ -13,7 +13,7 @@ function love.update(dt)
 
 	if other.update then other:update() end
 
-	input.hold()
+	input.hold(dt)
 end
 
 function love.draw()

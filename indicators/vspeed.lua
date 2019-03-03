@@ -11,10 +11,33 @@ return function()
 
 	local entity = {}
 
-	entity.update = function()
+	local intervals = {
+		300,
+		500,
+		700,
+		1000,
+		1300,
+		1500,
+		1500 + 1 * 2,
+		1500 + 2 * 2,
+		1500 + 3 * 2,
+		1500 + 4 * 2,
+		1500 + 5 * 2,
+		1500 + 6 * 2,
+		1500 + 7 * 2,
+		1500 + 8 * 2,
+		2000,
+		2400,
+	}
+
+	entity.getIntervals = function(self)
+		return state.data.vspeed, intervals
+	end
+
+	entity.update = function(self)
 		vspeed.val = state.data.vspeed / 1000 * 60 -- Feet per second to thousands of feet per minute
 
-		if vspeed.val >= 0 then
+		if vspeed.val <= 0 then
 			vspeed.sign = 1
 		else
 			vspeed.sign = -1
@@ -31,7 +54,7 @@ return function()
 		end
 	end
 
-	entity.draw = function()
+	entity.draw = function(self)
 		love.graphics.origin()
 		love.graphics.translate(love.graphics.getWidth() - 90, love.graphics.getHeight() / 2)
 

@@ -21,31 +21,29 @@ local strings = {
 	"Yeah, bet you feel real silly right now.",
 	"There's nothing else left.",
 	"Really, you can check the code.",
-	toprint = false,
-	numtoprint = 0,
 }
 
+local printnum = 0
+
 local function surprise(var, intervals)
-	if var < intervals[1] then
-		strings.toprint = false
-		strings.numtoprint = 0
-	else
+	if var > intervals[1] then
 		for i = 1, #intervals do
 			if intervals[i+1] then
 				if var >= intervals[i] and var < intervals[i+1] then
-					strings.numtoprint = i
+					printnum = math.max(printnum, i)
 				end
 			else
 				if var >= intervals[i] then
-					strings.numtoprint = i
+					printnum = math.max(printnum, i)
 				end
 			end
 		end
-		strings.toprint = true
 	end
 end
 
 entity.update = function(self)
+	printnum = 0
+
 	for _, indicator in ipairs(indicators) do
 		if indicator.getIntervals then
 			surprise(indicator:getIntervals())
@@ -54,11 +52,11 @@ entity.update = function(self)
 end
 
 entity.draw = function(self)
-	if strings.toprint and strings[strings.numtoprint] then
+	if strings[printnum] then
 		love.graphics.origin()
 		love.graphics.setColor(state.palette.white)
 		love.graphics.setFont(fonts.sans.normal)
-		love.graphics.printf(strings[strings.numtoprint], 400, 20, love.graphics.getWidth() - 420, 'left')
+		love.graphics.printf(strings[printnum], 400, 20, love.graphics.getWidth() - 420, 'left')
 	end
 end
 
