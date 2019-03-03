@@ -1,4 +1,5 @@
 local state = require 'state'
+local fonts = require 'fonts'
 
 return function()
 	local vspeed = {
@@ -44,26 +45,26 @@ return function()
 		love.graphics.setLineWidth(4)
 		love.graphics.line(-10,0,10,0)
 		
-		love.graphics.setFont(mono.vspeed)
-		love.graphics.print('0', -25, -mono.vspeed:getHeight() / 2)
+		love.graphics.setFont(fonts.mono.vspeed)
+		love.graphics.print('0', -25, -fonts.mono.vspeed:getHeight() / 2)
 
 		love.graphics.setColor(colors.white)
 		love.graphics.setLineWidth(4)
 
 		love.graphics.line(-10,-140,0,-140)
 		love.graphics.line(-10,140,0,140)
-		love.graphics.print('6', -25, 140 - mono.vspeed:getHeight() / 2)
-		love.graphics.print('6', -25, -140 - mono.vspeed:getHeight() / 2)
+		love.graphics.print('6', -25, 140 - fonts.mono.vspeed:getHeight() / 2)
+		love.graphics.print('6', -25, -140 - fonts.mono.vspeed:getHeight() / 2)
 
 		love.graphics.line(-10,-110,0,-110)
 		love.graphics.line(-10,110,0,110)
-		love.graphics.print('2', -25, 110 - mono.vspeed:getHeight() / 2)
-		love.graphics.print('2', -25, -110 - mono.vspeed:getHeight() / 2)
+		love.graphics.print('2', -25, 110 - fonts.mono.vspeed:getHeight() / 2)
+		love.graphics.print('2', -25, -110 - fonts.mono.vspeed:getHeight() / 2)
 
 		love.graphics.line(-10,-70,0,-70)
 		love.graphics.line(-10,70,0,70)
-		love.graphics.print('1', -25, 70 - mono.vspeed:getHeight() / 2)
-		love.graphics.print('1', -25, -70 - mono.vspeed:getHeight() / 2)
+		love.graphics.print('1', -25, 70 - fonts.mono.vspeed:getHeight() / 2)
+		love.graphics.print('1', -25, -70 - fonts.mono.vspeed:getHeight() / 2)
 
 		love.graphics.setLineWidth(2)
 		love.graphics.line(-10,-125,0,-125)
@@ -83,7 +84,7 @@ return function()
 
 		love.graphics.setScissor()
 
-		love.graphics.setFont(sans.textsmall)
+		love.graphics.setFont(fonts.sans.textsmall)
 		love.graphics.setColor(colors.lettergreen)
 		love.graphics.print("ft/min", -62, 165)
 		love.graphics.print("(x1000)", -62, 185)

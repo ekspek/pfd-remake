@@ -1,4 +1,5 @@
 local state = require 'state'
+local fonts = require 'fonts'
 
 return function()
 	local asf = 5 -- Airspeed scale factor - pixel to knot ratio
@@ -63,13 +64,13 @@ return function()
 
 		-- Main ticks and numeric labels
 		love.graphics.setColor(colors.white)
-		love.graphics.setFont(mono.airspeed)
+		love.graphics.setFont(fonts.mono.airspeed)
 		for i = 0, airspeed.max, 10 do
 			love.graphics.setLineWidth(2)
 			love.graphics.line(-10, 0, 0, 0)
 
 			if i%20 == 0 or i == 0 then
-				love.graphics.printf(i, -75, -mono.airspeed:getHeight() / 2, 75 - 20, "right")
+				love.graphics.printf(i, -75, -fonts.mono.airspeed:getHeight() / 2, 75 - 20, "right")
 			end
 			love.graphics.translate(0, -10 * asf)
 		end
@@ -86,18 +87,18 @@ return function()
 
 		-- Print the text for hundreds and tenths of the current airspeed display
 		love.graphics.setColor(colors.white)
-		love.graphics.setFont(mono.airspeedbig)
-		love.graphics.print(airspeed.t, 22 - mono.airspeedbig:getWidth(0), -mono.airspeedbig:getHeight() / 2)
-		love.graphics.print(airspeed.h, 22 - mono.airspeedbig:getWidth(0) * 2, -mono.airspeedbig:getHeight() / 2)
+		love.graphics.setFont(fonts.mono.airspeedbig)
+		love.graphics.print(airspeed.t, 22 - fonts.mono.airspeedbig:getWidth(0), -fonts.mono.airspeedbig:getHeight() / 2)
+		love.graphics.print(airspeed.h, 22 - fonts.mono.airspeedbig:getWidth(0) * 2, -fonts.mono.airspeedbig:getHeight() / 2)
 
 		-- Set crop area for scrolling units number
-		love.graphics.setScissor(50 - mono.airspeedbig:getWidth(0) - 22, 400 - 40, mono.airspeedbig:getWidth(0) * 4, 80)
+		love.graphics.setScissor(50 - fonts.mono.airspeedbig:getWidth(0) - 22, 400 - 40, fonts.mono.airspeedbig:getWidth(0) * 4, 80)
 
 		-- Draw scrolling units number
-		love.graphics.translate(22, airspeed.d * mono.airspeedbig:getHeight() - mono.airspeedbig:getHeight() / 2)
+		love.graphics.translate(22, airspeed.d * fonts.mono.airspeedbig:getHeight() - fonts.mono.airspeedbig:getHeight() / 2)
 		love.graphics.print(airspeed.u)
 
-		love.graphics.translate(0, -2 * mono.airspeedbig:getHeight())
+		love.graphics.translate(0, -2 * fonts.mono.airspeedbig:getHeight())
 		if airspeed.val < airspeed.max then
 			if airspeed.u + 2 >= 10 then
 				love.graphics.print(airspeed.u + 2 - 10)
@@ -106,7 +107,7 @@ return function()
 			end
 		end
 
-		love.graphics.translate(0, mono.airspeedbig:getHeight())
+		love.graphics.translate(0, fonts.mono.airspeedbig:getHeight())
 		if airspeed.val < airspeed.max then
 			if airspeed.u + 1 >= 10 then
 				love.graphics.print(airspeed.u + 1 - 10)
@@ -115,7 +116,7 @@ return function()
 			end
 		end
 
-		love.graphics.translate(0, 2 * mono.airspeedbig:getHeight())
+		love.graphics.translate(0, 2 * fonts.mono.airspeedbig:getHeight())
 		if airspeed.val > 1 then
 			if airspeed.u + 10 - 1 >= 10 then
 				love.graphics.print(airspeed.u - 1)
@@ -124,7 +125,7 @@ return function()
 			end
 		end
 
-		love.graphics.translate(0, mono.airspeedbig:getHeight())
+		love.graphics.translate(0, fonts.mono.airspeedbig:getHeight())
 		if airspeed.val > 1 then
 			if airspeed.u + 10 - 2 >= 10 then
 				love.graphics.print(airspeed.u - 2)
@@ -142,7 +143,7 @@ return function()
 		love.graphics.setLineWidth(2)
 		love.graphics.polygon("line", -40, 40, 60, 40, 60, 10, 70, 0, 60, -10, 60, -40, -40, -40)
 
-		love.graphics.setFont(sans.text)
+		love.graphics.setFont(fonts.sans.text)
 		love.graphics.setColor(colors.lettergreen)
 		love.graphics.print("ft/s", 10, 300)
 	end

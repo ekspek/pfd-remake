@@ -1,4 +1,5 @@
 local state = require 'state'
+local fonts = require 'fonts'
 
 return function()
 	local radius = 200
@@ -38,8 +39,8 @@ return function()
 				love.graphics.line(0,-radius,0,-radius + 10)
 
 				if not dirs[i] then
-					love.graphics.setFont(mono.compass)
-					love.graphics.print(i/10, -mono.compass:getWidth(i/10) / 2, -radius + 10)
+					love.graphics.setFont(fonts.mono.compass)
+					love.graphics.print(i/10, -fonts.mono.compass:getWidth(i/10) / 2, -radius + 10)
 				end
 			elseif i%5 == 0 then
 				love.graphics.setColor(colors.white)
@@ -49,8 +50,8 @@ return function()
 
 			if dirs[i] then
 				love.graphics.setColor(colors.white)
-				love.graphics.setFont(mono.compassbig)
-				love.graphics.print(dirs[i], -mono.compassbig:getWidth(dirs[i]) / 2, -radius + 5)
+				love.graphics.setFont(fonts.mono.compassbig)
+				love.graphics.print(dirs[i], -fonts.mono.compassbig:getWidth(dirs[i]) / 2, -radius + 5)
 			end
 		end
 

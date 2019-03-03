@@ -1,4 +1,5 @@
 local state = require 'state'
+local fonts = require 'fonts'
 
 return function()
 	local pitch_scale_factor = 6
@@ -86,7 +87,7 @@ return function()
 		love.graphics.push()
 
 		love.graphics.setColor(colors.white)
-		love.graphics.setFont(mono.compasshorizon)
+		love.graphics.setFont(fonts.mono.compasshorizon)
 
 		love.graphics.translate(-heading * 10, pitch_pixels)
 		love.graphics.translate(-3600,0)
@@ -95,7 +96,7 @@ return function()
 		for i = 1,3 do
 			for j = 10,360,10 do
 				love.graphics.translate(100, 0)
-				love.graphics.print(j / 10, -mono.compasshorizon:getWidth(j / 10) / 2, 0)
+				love.graphics.print(j / 10, -fonts.mono.compasshorizon:getWidth(j / 10) / 2, 0)
 			end
 		end
 
@@ -103,15 +104,15 @@ return function()
 
 		-- Pitch lines
 		love.graphics.setLineWidth(1)
-		love.graphics.setFont(mono.pitch)
+		love.graphics.setFont(fonts.mono.pitch)
 		for i = -9,9 do
 			-- 10 degree line
 			love.graphics.line(-50, -60 * i + pitch_pixels, 50, -60 * i + pitch_pixels)
 			if i ~= 0 then
-				love.graphics.print(math.abs(i) * 10, 55, -60 * i + pitch_pixels - mono.pitch:getHeight() / 2)
+				love.graphics.print(math.abs(i) * 10, 55, -60 * i + pitch_pixels - fonts.mono.pitch:getHeight() / 2)
 			end
 			if i ~= 0 then
-				love.graphics.printf(math.abs(i) * 10, -55 - mono.pitch:getWidth(math.abs(i * 10)), -60 * i + pitch_pixels - mono.pitch:getHeight() / 2, mono.pitch:getWidth(math.abs(i * 10)), 'right')
+				love.graphics.printf(math.abs(i) * 10, -55 - fonts.mono.pitch:getWidth(math.abs(i * 10)), -60 * i + pitch_pixels - fonts.mono.pitch:getHeight() / 2, fonts.mono.pitch:getWidth(math.abs(i * 10)), 'right')
 			end
 
 			if i ~= -9 then

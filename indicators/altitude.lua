@@ -1,4 +1,5 @@
 local state = require 'state'
+local fonts = require 'fonts'
 
 return function()
 	local asf = 0.5 -- Altitude scale factor - pixel to feet ratio
@@ -70,8 +71,8 @@ return function()
 				local string = ""
 				if i >= 0 then string = ' ' .. i else string = i end
 
-				love.graphics.setFont(mono.altitude)
-				love.graphics.printf(string, 15, -0.5 * i - 2 - mono.altitude:getHeight() / 2, 75, 'left')
+				love.graphics.setFont(fonts.mono.altitude)
+				love.graphics.printf(string, 15, -0.5 * i - 2 - fonts.mono.altitude:getHeight() / 2, 75, 'left')
 			end
 		end
 
@@ -86,28 +87,28 @@ return function()
 
 		-- Print the text for hundreds and tenths of the current altitude display
 		love.graphics.setColor(colors.white)
-		love.graphics.setFont(mono.altitudebig)
-		love.graphics.translate(28, -mono.altitudebig:getHeight() / 2)
+		love.graphics.setFont(fonts.mono.altitudebig)
+		love.graphics.translate(28, -fonts.mono.altitudebig:getHeight() / 2)
 		if altitude.val < 0 then
 			love.graphics.print('-')
-			love.graphics.translate(mono.altitudebig:getWidth('-'), 0)
+			love.graphics.translate(fonts.mono.altitudebig:getWidth('-'), 0)
 			love.graphics.print(altitude.k, 0, 0)
-			love.graphics.translate(mono.altitudebig:getWidth('0'), 0)
+			love.graphics.translate(fonts.mono.altitudebig:getWidth('0'), 0)
 		else
-			love.graphics.printf(altitude.k, 0, 0, mono.altitudebig:getWidth("00"), 'right')
-			love.graphics.translate(mono.altitudebig:getWidth("00"), 0)
+			love.graphics.printf(altitude.k, 0, 0, fonts.mono.altitudebig:getWidth("00"), 'right')
+			love.graphics.translate(fonts.mono.altitudebig:getWidth("00"), 0)
 		end
 
 		love.graphics.print(altitude.h, 0, 0)
 
 		love.graphics.setScissor(695, 360, 130, 80)
 
-		love.graphics.translate(mono.altitudebig:getWidth('-'), 0)
+		love.graphics.translate(fonts.mono.altitudebig:getWidth('-'), 0)
 		love.graphics.push()
 		love.graphics.translate(0, 2 * math.fmod(altitude.tp, 20))
 		love.graphics.print(string.format("%02d",altitude.t))
 
-		love.graphics.translate(0, -2 * mono.altitudebig:getHeight())
+		love.graphics.translate(0, -2 * fonts.mono.altitudebig:getHeight())
 		if altitude.val < altitude.max then
 			if altitude.t + 40 >= 100 then
 				love.graphics.print(string.format("%02d",altitude.t + 40 - 100))
@@ -116,7 +117,7 @@ return function()
 			end
 		end
 
-		love.graphics.translate(0, mono.altitudebig:getHeight())
+		love.graphics.translate(0, fonts.mono.altitudebig:getHeight())
 		if altitude.val < altitude.max then
 			if altitude.t + 20 >= 100 then
 				love.graphics.print(string.format("%02d",altitude.t + 20 - 100))
@@ -125,7 +126,7 @@ return function()
 			end
 		end
 
-		love.graphics.translate(0, 2 * mono.altitudebig:getHeight())
+		love.graphics.translate(0, 2 * fonts.mono.altitudebig:getHeight())
 		if altitude.val > altitude.min then
 			if altitude.t + 100 - 20 >= 100 then
 				love.graphics.print(string.format("%02d",altitude.t - 20))
@@ -134,7 +135,7 @@ return function()
 			end
 		end
 
-		love.graphics.translate(0, mono.altitudebig:getHeight())
+		love.graphics.translate(0, fonts.mono.altitudebig:getHeight())
 		if altitude.val > altitude.min then
 			if altitude.t + 100 - 40 >= 100 then
 				love.graphics.print(string.format("%02d",altitude.t - 40))
@@ -153,9 +154,9 @@ return function()
 		love.graphics.setLineWidth(2)
 		love.graphics.polygon('line', 150, 40, 20, 40, 20, 10, 10, 0, 20, -10, 20, -40, 150, -40)
 
-		love.graphics.setFont(sans.text)
+		love.graphics.setFont(fonts.sans.text)
 		love.graphics.setColor(colors.lettergreen)
-		love.graphics.print("ft", 110 - 10 - sans.text:getWidth("ft"), 300)
+		love.graphics.print("ft", 110 - 10 - fonts.sans.text:getWidth("ft"), 300)
 	end
 
 	return entity
