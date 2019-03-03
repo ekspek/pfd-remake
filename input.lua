@@ -4,7 +4,7 @@ local input = {}
 
 local keypressed = {
 	escape = function() love.event.quit() end,
-	r = function() state.data.altitude = 49900 end,
+	r = function() state.data.pitch = 190 end,
 }
 
 input.hold = function()

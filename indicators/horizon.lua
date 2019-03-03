@@ -27,8 +27,12 @@ return function()
 	}
 
 	local entity = {}
-	
-	entity.update = function()
+
+	entity.getIntervals = function(self)
+		return state.data.pitch, intervals
+	end
+
+	entity.update = function(self)
 		pitch = state.data.pitch
 
 		-- Pitch check to avoid going overboard
@@ -44,7 +48,7 @@ return function()
 		pitch_pixels = pitch * pitch_scale_factor
 	end
 
-	entity.draw = function()
+	entity.draw = function(self)
 		-- Set reference to the center of the screen
 		love.graphics.origin()
 		love.graphics.translate(love.graphics.getWidth() / 2 - 50, love.graphics.getHeight() / 2)
