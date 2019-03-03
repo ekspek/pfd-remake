@@ -1,7 +1,7 @@
 function airspeed_meter()
 	local asf = 5 -- Airspeed scale factor - pixel to knot ratio
 	local airspeed = {
-		val = data.ias,
+		val = state.data.ias,
 		max = 400,
 		d = 0,
 		u = 0,

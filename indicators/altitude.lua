@@ -1,7 +1,7 @@
 function altitude_indicator()
 	local asf = 0.5 -- Altitude scale factor - pixel to feet ratio
 	local altitude = {
-		val = data.altitude,
+		val = state.data.altitude,
 		max = 50000,
 		min = -1000,
 		k = 0,

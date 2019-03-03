@@ -17,7 +17,7 @@ function heading_indicator()
 	love.graphics.setColor(colors.white)
 	love.graphics.arc('line', 0, 0, radius, 0, -math.pi, 50)
 
-	love.graphics.rotate(-data.heading * math.pi / 180)
+	love.graphics.rotate(-state.data.heading * math.pi / 180)
 	for i = 1,360 do
 		love.graphics.rotate(math.pi / 180)
 

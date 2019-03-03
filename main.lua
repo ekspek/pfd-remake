@@ -4,19 +4,11 @@ require 'indicators.heading'
 require 'indicators.horizon'
 require 'indicators.vspeed'
 require 'other'
-
-data = {
-	altitude = 0,
-	ias = 0,
-	vspeed = 0,
-	pitch = 0,
-	roll = 0,
-	heading = 0,
-}
+state = require 'state'
 
 local keymap = {
 	escape = function() love.event.quit() end,
-	r = function() data.altitude = 49900 end,
+	r = function() state.data.altitude = 49900 end,
 }
 
 function love.keypressed(key)
@@ -66,39 +58,39 @@ end
 
 function love.update(dt)
 	if love.keyboard.isDown("up") then
-		data.pitch = data.pitch + 1
+		state.data.pitch = state.data.pitch + 1
 	elseif love.keyboard.isDown("down") then
-		data.pitch = data.pitch - 1
+		state.data.pitch = state.data.pitch - 1
 	end
 
 	if love.keyboard.isDown("left") then
-		data.roll = data.roll - math.pi / 180
+		state.data.roll = state.data.roll - math.pi / 180
 	elseif love.keyboard.isDown("right") then
-		data.roll = data.roll + math.pi / 180
+		state.data.roll = state.data.roll + math.pi / 180
 	end
 
 	if love.keyboard.isDown('z') then
-		data.ias = data.ias + 1
+		state.data.ias = state.data.ias + 1
 	elseif love.keyboard.isDown('x') then
-		data.ias = data.ias - 1
+		state.data.ias = state.data.ias - 1
 	end
 
 	if love.keyboard.isDown('a') then
-		data.altitude = data.altitude + 1
+		state.data.altitude = state.data.altitude + 1
 	elseif love.keyboard.isDown('s') then
-		data.altitude = data.altitude - 1
+		state.data.altitude = state.data.altitude - 1
 	end
 
 	if love.keyboard.isDown('q') then
-		data.heading = data.heading - 1
+		state.data.heading = state.data.heading - 1
 	elseif love.keyboard.isDown('w') then
-		data.heading = data.heading + 1
+		state.data.heading = state.data.heading + 1
 	end
 
 	if love.keyboard.isDown('1') then
-		data.vspeed = data.vspeed - 1
+		state.data.vspeed = state.data.vspeed - 1
 	elseif love.keyboard.isDown('2') then
-		data.vspeed = data.vspeed + 1
+		state.data.vspeed = state.data.vspeed + 1
 	end
 end
 

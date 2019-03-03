@@ -1,6 +1,6 @@
 function artificial_horizon()
 	local pitch_scale_factor = 6
-	local pitch = data.pitch
+	local pitch = state.data.pitch
 
 	local intervals = {
 		180,
@@ -31,7 +31,7 @@ function artificial_horizon()
 	end
 
 	-- Heading check to allow for looping
-	local heading = data.heading % 360
+	local heading = state.data.heading % 360
 
 	local pitch_pixels = pitch * pitch_scale_factor
 
@@ -45,7 +45,7 @@ function artificial_horizon()
 	love.graphics.setScissor(200,200,400,400)
 
 	-- Rotate the artificial horizon based on roll angle (in radians)
-	love.graphics.rotate(data.roll)
+	love.graphics.rotate(state.data.roll)
 
 	-- Defining the points and color for the blue sky rectangle
 	local sky = {
