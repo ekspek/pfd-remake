@@ -35,20 +35,20 @@ return function()
 		love.graphics.origin()
 		love.graphics.translate(love.graphics.getWidth() - 90, love.graphics.getHeight() / 2)
 
-		love.graphics.setColor(colors.gray)
+		love.graphics.setColor(state.palette.gray)
 		love.graphics.polygon('fill', 60, 100, 40, 150, 0, 150, 0, -150, 40, -150, 60, -100)
 		
 		love.graphics.translate(30,0)
 		love.graphics.push()
 
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.setLineWidth(4)
 		love.graphics.line(-10,0,10,0)
 		
 		love.graphics.setFont(fonts.mono.vspeed)
 		love.graphics.print('0', -25, -fonts.mono.vspeed:getHeight() / 2)
 
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.setLineWidth(4)
 
 		love.graphics.line(-10,-140,0,-140)
@@ -85,7 +85,7 @@ return function()
 		love.graphics.setScissor()
 
 		love.graphics.setFont(fonts.sans.textsmall)
-		love.graphics.setColor(colors.lettergreen)
+		love.graphics.setColor(state.palette.lettergreen)
 		love.graphics.print("ft/min", -62, 165)
 		love.graphics.print("(x1000)", -62, 185)
 	end

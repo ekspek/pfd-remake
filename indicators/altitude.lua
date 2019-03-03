@@ -44,7 +44,7 @@ return function()
 		love.graphics.translate(675,400)
 		love.graphics.push()
 
-		love.graphics.setColor(colors.gray)
+		love.graphics.setColor(state.palette.gray)
 		love.graphics.polygon('fill', 110, 350, -100, 350, -100, -350, 110, -350)
 
 		love.graphics.translate(0, altitude_pixels)
@@ -64,7 +64,7 @@ return function()
 
 		for i = -1000,50000,100 do
 			if math.abs(altitude.val - i) < 650 then
-				love.graphics.setColor(colors.white)
+				love.graphics.setColor(state.palette.white)
 				love.graphics.setLineWidth(1)
 				love.graphics.line(10, -i * asf, 0, -i * asf)
 
@@ -82,11 +82,11 @@ return function()
 		love.graphics.push()
 
 		-- Draw fill of current airspeed display
-		love.graphics.setColor(colors.black)
+		love.graphics.setColor(state.palette.black)
 		love.graphics.polygon("fill", 150, 40, 20, 40, 20, 10, 10, 0, 20, -10, 20, -40, 150, -40)
 
 		-- Print the text for hundreds and tenths of the current altitude display
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.setFont(fonts.mono.altitudebig)
 		love.graphics.translate(28, -fonts.mono.altitudebig:getHeight() / 2)
 		if altitude.val < 0 then
@@ -150,12 +150,12 @@ return function()
 		love.graphics.pop() -- Pop static middle left reference
 
 		-- Draw border of current airspeed display
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.setLineWidth(2)
 		love.graphics.polygon('line', 150, 40, 20, 40, 20, 10, 10, 0, 20, -10, 20, -40, 150, -40)
 
 		love.graphics.setFont(fonts.sans.text)
-		love.graphics.setColor(colors.lettergreen)
+		love.graphics.setColor(state.palette.lettergreen)
 		love.graphics.print("ft", 110 - 10 - fonts.sans.text:getWidth("ft"), 300)
 	end
 

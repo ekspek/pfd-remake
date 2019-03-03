@@ -65,7 +65,7 @@ return function()
 			400, - love.graphics.getHeight() - 50 + pitch_pixels,
 			400, - 1 + pitch_pixels
 		}
-		love.graphics.setColor(colors.skyblue)
+		love.graphics.setColor(state.palette.skyblue)
 		love.graphics.polygon('fill', sky)
 
 		-- Defining the points and color for the ground rectangle
@@ -75,18 +75,18 @@ return function()
 			400, love.graphics.getHeight() + 50 + pitch_pixels,
 			400, 1 + pitch_pixels
 		}
-		love.graphics.setColor(colors.groundbrown)
+		love.graphics.setColor(state.palette.groundbrown)
 		love.graphics.polygon('fill', ground)
 
 		-- Horizon line
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.setLineWidth(2)
 		love.graphics.line(-400, pitch_pixels, 400, pitch_pixels)
 
 		-- Heading indicator on horizon line
 		love.graphics.push()
 
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.setFont(fonts.mono.compasshorizon)
 
 		love.graphics.translate(-heading * 10, pitch_pixels)
@@ -182,33 +182,33 @@ return function()
 		love.graphics.pop()
 
 		-- Left HUD wing
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.polygon('fill', -150, 0, -50, 0, -50, 2, -150, 2)
 		love.graphics.polygon('fill', -50, 0, -50, 29, -48, 29, -48, 0)
 		love.graphics.polygon('fill', -50, 27, -50, 29, -56, 29, -56, 27)
 		love.graphics.polygon('fill', -54, 29, -56, 29, -56, 6, -54, 6)
 		love.graphics.polygon('fill', -54, 6, -54, 8, -150, 8, -150, 6)
 		love.graphics.polygon('fill', -150, 8, -150, 0, -148, 0, -148, 8)
-		love.graphics.setColor(colors.black)
+		love.graphics.setColor(state.palette.black)
 		love.graphics.polygon('fill', -148, 2, -50, 2, -50, 6, -148, 6)
 		love.graphics.polygon('fill', -54, 2, -50, 2, -50, 27, -54, 27)
 
 		-- Right HUD wing
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.polygon('fill', 150, 0, 50, 0, 50, 2, 150, 2)
 		love.graphics.polygon('fill', 50, 0, 50, 29, 48, 29, 48, 0)
 		love.graphics.polygon('fill', 50, 27, 50, 29, 56, 29, 56, 27)
 		love.graphics.polygon('fill', 54, 29, 56, 29, 56, 6, 54, 6)
 		love.graphics.polygon('fill', 54, 6, 54, 8, 150, 8, 150, 6)
 		love.graphics.polygon('fill', 150, 8, 150, 0, 148, 0, 148, 8)
-		love.graphics.setColor(colors.black)
+		love.graphics.setColor(state.palette.black)
 		love.graphics.polygon('fill', 148, 2, 50, 2, 50, 6, 148, 6)
 		love.graphics.polygon('fill', 54, 2, 50, 2, 50, 27, 54, 27)
 
 		-- HUD nose
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.polygon('fill', -5, 0, 5, 0, 5, 10, -5, 10)
-		love.graphics.setColor(colors.black)
+		love.graphics.setColor(state.palette.black)
 		love.graphics.polygon('fill', -3, 2, 3, 2, 3, 8, -3, 8)
 
 		-- Final origin reset

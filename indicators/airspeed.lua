@@ -44,7 +44,7 @@ return function()
 		love.graphics.translate(50, 400)
 		love.graphics.push() -- Push static middle left reference
 
-		love.graphics.setColor(colors.gray)
+		love.graphics.setColor(state.palette.gray)
 		love.graphics.polygon('fill', 0, 350, 75, 350, 75, -350, 0, -350)
 	
 		love.graphics.translate(75, airspeed_pixels)
@@ -63,7 +63,7 @@ return function()
 		end
 
 		-- Main ticks and numeric labels
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.setFont(fonts.mono.airspeed)
 		for i = 0, airspeed.max, 10 do
 			love.graphics.setLineWidth(2)
@@ -82,11 +82,11 @@ return function()
 		love.graphics.push() -- Push static middle left reference
 
 		-- Draw fill of current airspeed display
-		love.graphics.setColor(colors.black)
+		love.graphics.setColor(state.palette.black)
 		love.graphics.polygon("fill", -40, 40, 60, 40, 60, 10, 70, 0, 60, -10, 60, -40, -40, -40)
 
 		-- Print the text for hundreds and tenths of the current airspeed display
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.setFont(fonts.mono.airspeedbig)
 		love.graphics.print(airspeed.t, 22 - fonts.mono.airspeedbig:getWidth(0), -fonts.mono.airspeedbig:getHeight() / 2)
 		love.graphics.print(airspeed.h, 22 - fonts.mono.airspeedbig:getWidth(0) * 2, -fonts.mono.airspeedbig:getHeight() / 2)
@@ -139,12 +139,12 @@ return function()
 		love.graphics.pop() -- Pop static middle left reference
 
 		-- Draw border of current airspeed display
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.setLineWidth(2)
 		love.graphics.polygon("line", -40, 40, 60, 40, 60, 10, 70, 0, 60, -10, 60, -40, -40, -40)
 
 		love.graphics.setFont(fonts.sans.text)
-		love.graphics.setColor(colors.lettergreen)
+		love.graphics.setColor(state.palette.lettergreen)
 		love.graphics.print("ft/s", 10, 300)
 	end
 

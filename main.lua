@@ -1,68 +1,16 @@
 local state = require 'state'
 local indicators = require 'indicators'
-
-local keymap = {
-	escape = function() love.event.quit() end,
-	r = function() state.data.altitude = 49900 end,
-}
-
-function love.keypressed(key)
-	if keymap[key] then
-		keymap[key]()
-	end
-end
+local input = require 'input'
 
 function love.load()
-	colors = {
-		white = {1, 1, 1, 1},
-		black = {0, 0, 0, 1},
-		gray = {0.47, 0.47, 0.47, 1},
-		skyblue = {0.4, 0.4, 1, 1},
-		groundbrown = {0.7, 0.5, 0, 1},
-		lettergreen = {0.5, 1, 0.5, 1},
-	}
 end
 
 function love.update(dt)
-	if love.keyboard.isDown("up") then
-		state.data.pitch = state.data.pitch + 1
-	elseif love.keyboard.isDown("down") then
-		state.data.pitch = state.data.pitch - 1
-	end
-
-	if love.keyboard.isDown("left") then
-		state.data.roll = state.data.roll - math.pi / 180
-	elseif love.keyboard.isDown("right") then
-		state.data.roll = state.data.roll + math.pi / 180
-	end
-
-	if love.keyboard.isDown('z') then
-		state.data.ias = state.data.ias + 1
-	elseif love.keyboard.isDown('x') then
-		state.data.ias = state.data.ias - 1
-	end
-
-	if love.keyboard.isDown('a') then
-		state.data.altitude = state.data.altitude + 1
-	elseif love.keyboard.isDown('s') then
-		state.data.altitude = state.data.altitude - 1
-	end
-
-	if love.keyboard.isDown('q') then
-		state.data.heading = state.data.heading - 1
-	elseif love.keyboard.isDown('w') then
-		state.data.heading = state.data.heading + 1
-	end
-
-	if love.keyboard.isDown('1') then
-		state.data.vspeed = state.data.vspeed - 1
-	elseif love.keyboard.isDown('2') then
-		state.data.vspeed = state.data.vspeed + 1
-	end
-
 	for _, indicator in ipairs(indicators) do
 		if indicator.update then indicator:update() end
 	end
+
+	input.hold()
 end
 
 function love.draw()
@@ -78,5 +26,9 @@ function love.draw()
 		love.graphics.printf(strings[strings.numtoprint], 400, 20, love.graphics.getWidth() - 420, 'left')
 	end
 	--]]
+end
+
+function love.keypressed(key)
+	input.press(key)
 end
 

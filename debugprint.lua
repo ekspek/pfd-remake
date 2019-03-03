@@ -5,7 +5,7 @@ return function()
 	local entity = {}
 
 	entity.draw = function()
-		love.graphics.setColor(colors.white)
+		love.graphics.setColor(state.palette.white)
 		love.graphics.setFont(fonts.sans.normal)
 		love.graphics.print("A " .. string.format("%.5f", state.data.altitude), 20, 20)
 		love.graphics.print("S " .. string.format("%.5f", state.data.ias), 20, 20 + fonts.sans.normal:getHeight() + 5)
