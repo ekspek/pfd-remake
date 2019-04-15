@@ -21,7 +21,13 @@ Instead of relying on input from external programs, like the original program, t
 
 Networking capabilites similar to the original project are planned but not yet implemented.
 
-#### Font
+### Screenshot
+
+Below is a screenshot of the display in its current state.
+
+![Screenshot of the display](./screenshot.png)
+
+### Font
 
 The font used was the [B612 font family](https://b612-font.com/), available [on GitHub](https://github.com/polarsys/b612). Copyright goes to the font creators.
 
